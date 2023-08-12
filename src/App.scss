@@ -1,0 +1,150 @@
+@use "three-dots";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .absolute-center-center {
+    @apply absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2;
+  }
+  .flex-center-center {
+    @apply flex justify-center items-center;
+  }
+  .bg-gradient{
+    @apply bg-gradient-to-b from-[#171120] to-[#39355d];
+  }
+}
+
+html,
+body,
+#root {
+  height: 100vh;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+select {
+  appearance: none;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: normal;
+  box-sizing: border-box;
+}
+
+.ltr {
+  direction: ltr;
+}
+
+.rtl {
+  direction: rtl;
+}
+
+button {
+  all: unset;
+}
+
+@font-face {
+  font-family: normal;
+  src: url("assets/fonts/3.woff2");
+}
+
+@font-face {
+  font-family: medium;
+  src: url("assets/fonts/5.woff2");
+}
+
+@font-face {
+  font-family: bold;
+  src: url("assets/fonts/8.woff2");
+}
+
+// animations
+
+.slide-left {
+  animation: slideLeft 1s 1;
+}
+
+.slide-right {
+  animation: slideRight 1s 1;
+}
+
+.slide-bottom {
+  animation: slideBottom 1s 1;
+}
+
+.slide-top {
+  animation: slideTop 1s 1;
+}
+
+.scale-down {
+  animation: scaleDown 1s 1;
+}
+
+.hero {
+  animation: hero 1s 1;
+}
+
+@keyframes slideLeft {
+  from {
+    transform: translateX(calc(-100vw - 100%));
+  }
+
+  to {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    transform: translateX(calc(100vw + 100%));
+  }
+
+  to {
+    transform: translateX(0px);
+  }
+}
+
+@keyframes slideBottom {
+  from {
+    transform: translateY(calc(100vh + 100%));
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes slideTop {
+  from {
+    transform: translateY(calc(-100vh - 100%));
+  }
+
+  to {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes scaleDown {
+  from {
+    transform: scale(220%);
+  }
+
+  to {
+    transform: scale(100%);
+  }
+}
+
+@keyframes hero {
+  from {
+    width: 48vw;
+    height: 48vw;
+  }
+
+  to {
+    width: 100vw;
+    height: 100vw;
+  }
+}

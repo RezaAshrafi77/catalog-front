@@ -2,6 +2,7 @@
 
 
 export { default as template } from "./template.js";
+export { default as files } from "./files.js";
 // export { default as comment } from "./comment.js";
 // export { default as config } from "./config.js";
 // export { default as faq } from "./faq.js";

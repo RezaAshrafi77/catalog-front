@@ -3,23 +3,23 @@ import { toast } from "react-toastify";
 import ApiConfig from "~/config";
 const { baseUrl } = ApiConfig;
 
-const template = {
-  getTemplate:
+const files = {
+  getFile:
     (data = {}) =>
     async (dispatch) => {
       await axios
-        .get(`${baseUrl}/${data?.id}`)
+        .get(`${baseUrl}/files/${data?.id}`)
         .then((res) => {
-          dispatch({ type: "template/loading" });
+          dispatch({ type: "/files/loading" });
           switch (res?.status) {
             case 200:
-              dispatch({ type: "template/getTemplate", data: res.data.data });
+              dispatch({ type: "/files/getFile", data: res.data.data });
           }
         })
         .catch((error) => {
-          dispatch({ type: "template/error", data: error });
+          dispatch({ type: "/files/error", data: error });
         });
     },
 };
 
-export default template;
+export default files;

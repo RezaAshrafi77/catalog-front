@@ -9,7 +9,7 @@ export default function Portrait({ data, events, classNames, ...props }) {
       onClick={() => events["onClick"]()}
     >
       <Image
-        src={data?.imageUrl}
+        src={baseUrl + "/files/" + data?.fileId?._id}
         classNames="object-cover w-[45vw] h-full min-h-[92vw]"
         events={{ onClick: () => {} }}
       />

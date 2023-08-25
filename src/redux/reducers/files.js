@@ -3,17 +3,14 @@ import { toast } from "react-toastify";
 const initialState = {
   loading: false,
   error: null,
-  template: null,
 };
 
-export default function template(state = initialState, action) {
+export default function file(state = initialState, action) {
   let { type, data, params } = action;
   switch (type) {
-    case "template/getTemplate":
-      return { ...state, template: data, loading: false, error: null };
-    case "template/loading":
-      return { ...state, loading: true };
-    case "template/error":
+    case "files/loading":
+      return { ...state, loading: true, progress: 0 };
+    case "file/error":
       toast.error(data?.message);
       return { ...state, loading: false, error: data.message };
     default:

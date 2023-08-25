@@ -4,17 +4,21 @@ import { connect } from "react-redux";
 
 // redux-actions
 // import { setMode } from "~/states/slices/Device";
+import { template } from "./redux/actions";
 
 //components
 import { Home, Vitrin, Splash, About } from "./screens";
 // import { MenuFullLayer } from "~/components";
 
 let splashInterval;
-export const Router = ({ template }) => {
+export const Router = ({ getTemplateApi, template }) => {
   const [splashDuration, setSplashDuration] = useState(3);
   const [homeIsReady, setHomeIsReady] = useState(false);
 
   useEffect(() => {
+    // get data
+    getTemplateApi({ id: window.location.pathname.split("/")[1] });
+
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -50,12 +54,12 @@ export const Router = ({ template }) => {
         <BrowserRouter>
           <Routes>
             <Route
-              path="/"
+              path="/:id"
               exact
               element={homeIsReady ? <Home /> : <Splash />}
             />
-            <Route path="/vitrin" exact element={<Vitrin />} />
-            <Route path="/about-us" exact element={<About />} />
+            <Route path="/:id/vitrin" exact element={<Vitrin />} />
+            <Route path="/:id/about-us" exact element={<About />} />
             <Route path="*" exact element={<></>} />
           </Routes>
         </BrowserRouter>
@@ -68,6 +72,9 @@ const mapStateToProps = (state) => ({
   template: state.template.template,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getTemplateApi: template.getTemplate,
+
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Router);

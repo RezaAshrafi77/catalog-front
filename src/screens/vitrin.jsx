@@ -8,8 +8,9 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Navbar, Button, Product, Drawer } from "~/components";
+import { Navbar, Button, Product, Drawer, Loading } from "~/components";
 import Image from "../components/Image";
+import { baseUrl } from "../config";
 
 export const Vitrin = ({ template, ...props }) => {
   const navigation = useNavigate();
@@ -58,71 +59,82 @@ export const Vitrin = ({ template, ...props }) => {
           />
         </div>
       </Drawer>
-      <Drawer
-        key={"vitrin-drawer-part"}
-        open={part}
-        direction="right"
-        size="100%"
-        events={{
-          onClose: () => setPart(null),
-        }}
-      >
-        <div className="relative flex-1 flex flex-col bg-gradient-to-b from-[#171120] to-[#39355d]">
-          <Navbar
-            classNames="!pt-8"
-            leading={
-              <Button
-                icon={<MdChevronRight size={"11vw"} />}
-                events={{ onSubmit: () => setPart(null) }}
-                className="text-white"
-              />
-            }
-          />
-          <Image
-            src={part?.fileId}
-            classNames="object-contained w-full bg-red-100 h-[100vw] min-h-[92vw]"
-            events={{ onClick: () => {} }}
-          />
-          <div className="flex flex-col px-[8vw] pt-6">
-            <strong className="text-white text-3xl font-bold">
-              {part?.title}
-            </strong>
+      {part ? (
+        <Drawer
+          key={"vitrin-drawer-part"}
+          open={part}
+          direction="right"
+          size="100%"
+          events={{
+            onClose: () => setPart(null),
+          }}
+        >
+          <div className="relative flex-1 flex flex-col bg-gradient-to-b from-[#171120] to-[#39355d]">
+            <Navbar
+              classNames="!pt-8"
+              leading={
+                <Button
+                  icon={<MdChevronRight size={"11vw"} />}
+                  events={{ onSubmit: () => setPart(null) }}
+                  className="text-white"
+                />
+              }
+            />
+            <Image
+              src={baseUrl + "/files/" + part?.fileId?._id}
+              classNames="object-contained w-full bg-red-100"
+              events={{ onClick: () => {} }}
+            />
+            <div className="flex flex-col px-[8vw] pt-6">
+              <strong className="text-white text-3xl font-bold">
+                {part?.title}
+              </strong>
+            </div>
+          </div>
+        </Drawer>
+      ) : null}
+
+      {template ? (
+        <div className="h-full overflow-y-scroll pb-[10vh]">
+          <div
+            className={`grid grid-cols-2 gap-3 px-4 py-10 min-h-full overflow-x-hidden`}
+          >
+            {template?.parts?.map((part, index) => (
+              <>
+                {template?.parts?.length < 3 ? (
+                  <Product
+                    data={part}
+                    key={index}
+                    style={"square"}
+                    events={{
+                      onClick: () => setPart(part),
+                    }}
+                  />
+                ) : (
+                  <Product
+                    data={part}
+                    key={index}
+                    style={
+                      index === 1 ||
+                      ((index - 1) % 6 === 0 && index !== 1) ||
+                      (index % 3 === 0 && index % 2 !== 0)
+                        ? "portrait"
+                        : "square"
+                    }
+                    events={{
+                      onClick: () => setPart(part),
+                    }}
+                  />
+                )}
+              </>
+            ))}
           </div>
         </div>
-      </Drawer>
-      <div className="h-full overflow-y-scroll pb-[10vh]">
-        <div className={`grid grid-cols-2 gap-3 p-4 overflow-x-hidden`}>
-          {template?.parts?.map((part, index) => (
-            <>
-              {template?.parts?.length < 3 ? (
-                <Product
-                  data={part}
-                  key={index}
-                  style={"square"}
-                  events={{
-                    onClick: () => setPart(part),
-                  }}
-                />
-              ) : (
-                <Product
-                  data={part}
-                  key={index}
-                  style={
-                    index === 1 ||
-                    ((index - 1) % 6 === 0 && index !== 1) ||
-                    (index % 3 === 0 && index % 2 !== 0)
-                      ? "portrait"
-                      : "square"
-                  }
-                  events={{
-                    onClick: () => setPart(part),
-                  }}
-                />
-              )}
-            </>
-          ))}
+      ) : (
+        <div className="flex-1 flex-center-center">
+          <Loading />
         </div>
-      </div>
+      )}
     </div>
   );
 };

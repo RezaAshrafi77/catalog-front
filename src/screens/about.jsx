@@ -66,12 +66,17 @@ export const About = ({ template }) => {
           ) : null}
         </li>
       </ul>
-      <a href="https://www.google.com/maps/@35.843,50.967,20z" target="_blank">
-        <Image
-          src="https://api.neshan.org/v2/static?key=service.JK66CWU8gRCNgGhWAEuTM82fanbBPxBJgpfrp1Lk&type=standard-day&zoom=16&center=35.81885847755913,50.82371167275139&width=100&height=100&marker=red"
-          classNames={"w-full h-[80vw] rounded-3xl"}
-        />
-      </a>
+      {template?.about?.location || true ? (
+        <a
+          href="https://www.google.com/maps/@35.843,50.967,20z"
+          target="_blank"
+        >
+          <Image
+            src="https://api.neshan.org/v2/static?key=service.JK66CWU8gRCNgGhWAEuTM82fanbBPxBJgpfrp1Lk&type=standard-day&zoom=16&center=35.81885847755913,50.82371167275139&width=100&height=100&marker=red"
+            classNames={"w-full h-[80vw] rounded-3xl"}
+          />
+        </a>
+      ) : null}
     </div>
   );
 };

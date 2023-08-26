@@ -75,8 +75,7 @@ export const Router = ({ getTemplateApi, template }) => {
                 />
                 <Route path="/:id/vitrin" element={<Vitrin />} />
                 <Route path="/:id/about-us" element={<About />} />
-                <Route path="/404" element={<NotFound />} />
-                <Route path="*" element={<></>} />
+                <Route path="*" element={<NotFound />} />
               </>
             ) : (
               <Route path="*" element={<DimentionGuide />} />

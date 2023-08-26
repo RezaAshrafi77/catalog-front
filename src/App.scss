@@ -87,6 +87,7 @@ button {
   animation: hero 1s 1;
 }
 
+
 @keyframes slideLeft {
   from {
     transform: translateX(calc(-100vw - 100%));
@@ -147,4 +148,21 @@ button {
     width: 100vw;
     height: 100vw;
   }
+}
+
+// extra classes
+.snap-align-start{
+  scroll-snap-align: start;
+}
+
+.snap-mandatory::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+.snap-mandatory::-webkit-scrollbar-thumb {
+  background: rgb(113, 39, 160);
+  border-radius: 10px;
+}
+.snap-mandatory::-webkit-scrollbar-track {
+  background: transparent;
 }

@@ -11,7 +11,7 @@ export default function Square({ data, events, classNames, ...props }) {
     >
       <Image
         events={{ onClick: () => {} }}
-        src={baseUrl + "/files/" + data?.fileId?._id}
+        src={baseUrl + "/files/" + data?.fileIds[0]?._id}
         classNames={`min-w-[45vw] min-h-[45vw] max-h-[45vw] object-cover`}
       />
       <span className="absolute right-1 top-2 px-3 py-0.5 rounded-full bg-red-400 text-white">

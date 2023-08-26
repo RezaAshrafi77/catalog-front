@@ -7,12 +7,12 @@ export default function Failed({ data, classNames, events, ...props }) {
     >
       {props?.icon}
       {props?.title ? (
-        <strong className="text-[2.5vh] font-bold text-center mb-[1.5vh] px-[10%]">
+        <strong className="text-[2.5vh] font-bold text-center mb-[1.5vh]">
           {props?.title}
         </strong>
       ) : null}
       {props?.subtitle ? (
-        <p className="text-[1.6vh] text-center font-normal px-[10%] mb-[6vh]">
+        <p className="text-lg text-center font-normal mb-[6vh]">
           {props?.subtitle}
         </p>
       ) : null}

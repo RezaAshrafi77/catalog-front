@@ -7,18 +7,26 @@ import { connect } from "react-redux";
 import { template } from "./redux/actions";
 
 //components
-import { Home, Vitrin, Splash, About } from "./screens";
+import {
+  Home,
+  Vitrin,
+  Splash,
+  About,
+  NotFound,
+  DimentionGuide,
+} from "./screens";
+import { checkDevice } from "./utils/funcs";
 // import { MenuFullLayer } from "~/components";
 
 let splashInterval;
 export const Router = ({ getTemplateApi, template }) => {
   const [splashDuration, setSplashDuration] = useState(3);
   const [homeIsReady, setHomeIsReady] = useState(false);
+  const [device, setDevice] = useState("mobile");
 
   useEffect(() => {
     // get data
     getTemplateApi({ id: window.location.pathname.split("/")[1] });
-
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -26,6 +34,12 @@ export const Router = ({ getTemplateApi, template }) => {
       let vh = window.innerHeight * 0.01;
       // Then we set the value in the --vh custom property to the root of the document
       document.documentElement.style.setProperty("--vh", `${vh}px`);
+    });
+
+    // check device width
+    setDevice(checkDevice());
+    window.addEventListener("resize", () => {
+      setDevice(checkDevice());
     });
   }, []);
 
@@ -48,19 +62,25 @@ export const Router = ({ getTemplateApi, template }) => {
   return (
     <div className={`dark h-full`}>
       <div
-        className={`flex flex-col h-full w-full rtl overflow-x-hidden lg:py-0`}
+        className={`flex flex-col h-full w-full rtl overflow-x-hidden bg-gradient text-white lg:py-0`}
       >
         {/* {menuFullLayer ? <MenuFullLayer /> : null} */}
         <BrowserRouter>
           <Routes>
-            <Route
-              path="/:id"
-              exact
-              element={homeIsReady ? <Home /> : <Splash />}
-            />
-            <Route path="/:id/vitrin" exact element={<Vitrin />} />
-            <Route path="/:id/about-us" exact element={<About />} />
-            <Route path="*" exact element={<></>} />
+            {device === "mobile" ? (
+              <>
+                <Route
+                  path="/:id"
+                  element={homeIsReady ? <Home /> : <Splash />}
+                />
+                <Route path="/:id/vitrin" element={<Vitrin />} />
+                <Route path="/:id/about-us" element={<About />} />
+                <Route path="/404" element={<NotFound />} />
+                <Route path="*" element={<></>} />
+              </>
+            ) : (
+              <Route path="*" element={<DimentionGuide />} />
+            )}
           </Routes>
         </BrowserRouter>
       </div>
@@ -74,7 +94,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   getTemplateApi: template.getTemplate,
-
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Router);

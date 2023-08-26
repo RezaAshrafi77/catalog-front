@@ -78,7 +78,7 @@ export const Home = ({ template, ...props }) => {
           loading={navigateLoadings?.about}
           color="primary"
           type="outlined"
-          classNames="!bg-white text-primary"
+          classNames="!bg-white !text-primary"
           events={{
             onSubmit: (e) => {
               setNavigateLoading({ ...navigateLoadings, about: true });

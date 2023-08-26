@@ -8,7 +8,14 @@ import { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-import { Navbar, Button, Product, Drawer, Loading } from "~/components";
+import {
+  Navbar,
+  Button,
+  Product,
+  Drawer,
+  Loading,
+  Carousel,
+} from "~/components";
 import Image from "../components/Image";
 import { baseUrl } from "../config";
 
@@ -23,14 +30,14 @@ export const Vitrin = ({ template, ...props }) => {
         classNames="!pt-8 text-white"
         leading={
           <Button
-            icon={<MdFilterListAlt size={"9vw"} />}
+            icon={<MdFilterListAlt size={"2rem"} />}
             events={{ onSubmit: () => setFilterToggle(true) }}
             className="text-white"
           />
         }
         actions={[
           <Button
-            icon={<MdChevronLeft size={"11vw"} />}
+            icon={<MdChevronLeft size={"2.5rem"} />}
             events={{ onSubmit: () => navigation(-1) }}
             className="text-white"
           />,
@@ -52,48 +59,60 @@ export const Vitrin = ({ template, ...props }) => {
             leading={<div></div>}
             actions={[
               <Button
-                icon={<MdClose size="10vw" color="white" />}
+                icon={<MdClose size="2rem" color="white" />}
                 events={{ onSubmit: () => setFilterToggle(false) }}
               />,
             ]}
           />
         </div>
       </Drawer>
-      {part ? (
-        <Drawer
-          key={"vitrin-drawer-part"}
-          open={part}
-          direction="right"
-          size="100%"
-          events={{
-            onClose: () => setPart(null),
-          }}
-        >
-          <div className="relative flex-1 flex flex-col bg-gradient-to-b from-[#171120] to-[#39355d]">
-            <Navbar
-              classNames="!pt-8"
-              leading={
-                <Button
-                  icon={<MdChevronRight size={"11vw"} />}
-                  events={{ onSubmit: () => setPart(null) }}
-                  className="text-white"
+      <Drawer
+        key={"vitrin-drawer-part"}
+        open={part}
+        direction="right"
+        size="100%"
+        events={{
+          onClose: () => setPart(null),
+        }}
+      >
+        <div className="relative flex-1 flex flex-col bg-gradient-to-b from-[#171120] to-[#39355d]">
+          <Navbar
+            classNames="!pt-8"
+            leading={
+              <Button
+                icon={<MdChevronRight size={"2.5rem"} />}
+                events={{ onSubmit: () => setPart(null) }}
+                className="text-white"
+              />
+            }
+          />
+          {part?.fileIds?.length > 1 ? (
+            <Carousel
+              classNames="w-[100vw] overflow-x-auto snap-x snap-mandatory scroll-smooth"
+              render={part?.fileIds?.map((file, index) => (
+                <Image
+                  key={"carousel-items-" + index}
+                  src={baseUrl + "/files/" + file?._id}
+                  classNames="snap-align-start shrink-0 transition-all object-contained w-[90vw] m-3 bg-red-100"
+                  events={{ onClick: () => {} }}
                 />
-              }
+              ))}
             />
+          ) : (
             <Image
-              src={baseUrl + "/files/" + part?.fileId?._id}
+              src={baseUrl + "/files/" + part?.fileIds[0]?._id}
               classNames="object-contained w-full bg-red-100"
+              key="vitrin-drawer-image"
               events={{ onClick: () => {} }}
             />
-            <div className="flex flex-col px-[8vw] pt-6">
-              <strong className="text-white text-3xl font-bold">
-                {part?.title}
-              </strong>
-            </div>
+          )}
+          <div className="flex flex-col px-[8vw] pt-16">
+            <strong className="text-white text-3xl font-bold">
+              {part?.title}
+            </strong>
           </div>
-        </Drawer>
-      ) : null}
-
+        </div>
+      </Drawer>
       {template ? (
         <div className="h-full overflow-y-scroll pb-[10vh]">
           <div
@@ -104,7 +123,7 @@ export const Vitrin = ({ template, ...props }) => {
                 {template?.parts?.length < 3 ? (
                   <Product
                     data={part}
-                    key={index}
+                    key={'vitrin-items-' + index}
                     style={"square"}
                     events={{
                       onClick: () => setPart(part),
@@ -113,7 +132,7 @@ export const Vitrin = ({ template, ...props }) => {
                 ) : (
                   <Product
                     data={part}
-                    key={index}
+                    key={'vitrin-items-' + index}
                     style={
                       index === 1 ||
                       ((index - 1) % 6 === 0 && index !== 1) ||

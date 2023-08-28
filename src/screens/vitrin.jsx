@@ -76,7 +76,7 @@ export const Vitrin = ({ template, ...props }) => {
                   <span className="text-lg font-medium">دسته بندی‌ها</span>
                 </div>
                 <ul className="flex flex-col gap-8 pt-4">
-                  {template?.allPartCategoris?.map((cat, index) => (
+                  {template?.allPartCategories?.map((cat, index) => (
                     <li className="w-full flex justify-between">
                       <strong className="text-base font-medium">
                         {cat?.name}

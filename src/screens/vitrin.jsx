@@ -5,7 +5,7 @@ import {
   MdFilterListAlt,
 } from "react-icons/md";
 import { TbMoodEmpty } from "react-icons/tb";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -26,6 +26,15 @@ export const Vitrin = ({ template, ...props }) => {
   const navigation = useNavigate();
   const [filterToggle, setFilterToggle] = useState(false);
   const [part, setPart] = useState(null);
+  const [activeCat, setActiveCat] = useState(null);
+  const [loadingForFilter, setLoadingForFilter] = useState(false);
+
+  useEffect(() => {
+    setLoadingForFilter(true);
+    setTimeout(() => {
+      setLoadingForFilter(false);
+    }, 1000);
+  }, [activeCat]);
 
   return (
     <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-gradient">
@@ -70,7 +79,7 @@ export const Vitrin = ({ template, ...props }) => {
             ]}
           />
           <div className="flex flex-col flex-1 overflow-y-scroll gap-4">
-            {template?.allPartCategoris?.length || true ? (
+            {template?.allPartCategories?.length ? (
               <>
                 <div className="w-full flex justify-between border-solid border-b border-[#555] pb-3">
                   <span className="text-lg font-medium">دسته بندی‌ها</span>
@@ -81,7 +90,15 @@ export const Vitrin = ({ template, ...props }) => {
                       <strong className="text-base font-medium">
                         {cat?.name}
                       </strong>
-                      <Input type="radio" name="categories" classNames="w-6" />
+                      <Input
+                        key={index}
+                        type="radio"
+                        name="categories"
+                        classNames="w-6"
+                        events={{
+                          onChange: (name, value) => setActiveCat(cat?.name),
+                        }}
+                      />
                     </li>
                   ))}
                 </ul>
@@ -113,7 +130,7 @@ export const Vitrin = ({ template, ...props }) => {
           {part?.fileIds?.length > 1 ? (
             part ? (
               <Carousel
-                classNames="w-[100vw] overflow-x-auto snap-x snap-mandatory scroll-smooth"
+                classNames="w-[100vw] overflow-x-auto snap-x snap-mandatory scroll-smooth h-[40vh]"
                 render={part?.fileIds?.map((file, index) => (
                   <Image
                     key={"carousel-items-" + index}
@@ -139,13 +156,18 @@ export const Vitrin = ({ template, ...props }) => {
           </div>
         </div>
       </Drawer>
-      {template ? (
+      {template && !loadingForFilter ? (
         template?.parts?.length ? (
           <div className="h-full overflow-y-scroll pb-[10vh]">
             <div
               className={`grid grid-cols-2 gap-3 px-4 py-10 overflow-x-hidden`}
             >
-              {template?.parts?.map((part, index) => (
+              {(activeCat
+                ? template?.parts?.filter((part) =>
+                    part?.categoryIds?.find((cat) => cat?.name === activeCat)
+                  )
+                : template?.parts
+              )?.map((part, index) => (
                 <>
                   {template?.parts?.length < 3 ? (
                     <Product

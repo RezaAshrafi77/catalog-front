@@ -4,6 +4,7 @@ import {
   MdClose,
   MdFilterListAlt,
 } from "react-icons/md";
+import { TbMoodEmpty } from "react-icons/tb";
 import { useState } from "react";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,6 +16,7 @@ import {
   Drawer,
   Loading,
   Carousel,
+  Failed,
 } from "~/components";
 import Image from "../components/Image";
 import { baseUrl } from "../config";
@@ -87,25 +89,27 @@ export const Vitrin = ({ template, ...props }) => {
             }
           />
           {part?.fileIds?.length > 1 ? (
-            <Carousel
-              classNames="w-[100vw] overflow-x-auto snap-x snap-mandatory scroll-smooth"
-              render={part?.fileIds?.map((file, index) => (
-                <Image
-                  key={"carousel-items-" + index}
-                  src={baseUrl + "/files/" + file?._id}
-                  classNames="snap-align-start shrink-0 transition-all object-contained w-[90vw] m-3 bg-red-100"
-                  events={{ onClick: () => {} }}
-                />
-              ))}
-            />
-          ) : (
+            part ? (
+              <Carousel
+                classNames="w-[100vw] overflow-x-auto snap-x snap-mandatory scroll-smooth"
+                render={part?.fileIds?.map((file, index) => (
+                  <Image
+                    key={"carousel-items-" + index}
+                    src={baseUrl + "/files/" + file?._id}
+                    classNames="snap-align-start shrink-0 transition-all object-contained w-[90vw] m-3 bg-red-100"
+                    events={{ onClick: () => {} }}
+                  />
+                ))}
+              />
+            ) : null
+          ) : part ? (
             <Image
               src={baseUrl + "/files/" + part?.fileIds[0]?._id}
               classNames="object-contained w-full bg-red-100"
               key="vitrin-drawer-image"
               events={{ onClick: () => {} }}
             />
-          )}
+          ) : null}
           <div className="flex flex-col px-[8vw] pt-16">
             <strong className="text-white text-3xl font-bold">
               {part?.title}
@@ -114,41 +118,49 @@ export const Vitrin = ({ template, ...props }) => {
         </div>
       </Drawer>
       {template ? (
-        <div className="h-full overflow-y-scroll pb-[10vh]">
-          <div
-            className={`grid grid-cols-2 gap-3 px-4 py-10 min-h-full overflow-x-hidden`}
-          >
-            {template?.parts?.map((part, index) => (
-              <>
-                {template?.parts?.length < 3 ? (
-                  <Product
-                    data={part}
-                    key={'vitrin-items-' + index}
-                    style={"square"}
-                    events={{
-                      onClick: () => setPart(part),
-                    }}
-                  />
-                ) : (
-                  <Product
-                    data={part}
-                    key={'vitrin-items-' + index}
-                    style={
-                      index === 1 ||
-                      ((index - 1) % 6 === 0 && index !== 1) ||
-                      (index % 3 === 0 && index % 2 !== 0)
-                        ? "portrait"
-                        : "square"
-                    }
-                    events={{
-                      onClick: () => setPart(part),
-                    }}
-                  />
-                )}
-              </>
-            ))}
+        template?.parts?.length  ? (
+          <div className="h-full overflow-y-scroll pb-[10vh]">
+            <div
+              className={`grid grid-cols-2 gap-3 px-4 py-10 min-h-full overflow-x-hidden`}
+            >
+              {template?.parts?.map((part, index) => (
+                <>
+                  {template?.parts?.length < 3 ? (
+                    <Product
+                      data={part}
+                      key={"vitrin-items-" + index}
+                      style={"square"}
+                      events={{
+                        onClick: () => setPart(part),
+                      }}
+                    />
+                  ) : (
+                    <Product
+                      data={part}
+                      key={"vitrin-items-" + index}
+                      style={
+                        index === 1 ||
+                        ((index - 1) % 6 === 0 && index !== 1) ||
+                        (index % 3 === 0 && index % 2 !== 0)
+                          ? "portrait"
+                          : "square"
+                      }
+                      events={{
+                        onClick: () => setPart(part),
+                      }}
+                    />
+                  )}
+                </>
+              ))}
+            </div>
           </div>
-        </div>
+        ) : (
+          <Failed
+            icon={<TbMoodEmpty size="40vw" color="yellow" />}
+            subtitle="هیچ محصولی یافت نشد."
+            classNames="gap-6"
+          />
+        )
       ) : (
         <div className="flex-1 flex-center-center">
           <Loading />

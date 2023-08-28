@@ -1,6 +1,7 @@
 import React from "react";
 
 import Image from "../Image";
+import { baseUrl } from "../../config";
 
 export default function Portrait({ data, events, classNames, ...props }) {
   return (

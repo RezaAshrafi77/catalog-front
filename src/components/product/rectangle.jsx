@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 import Image from "../Image";
+import { baseUrl } from "../../config";
 
 export default function Rectangle({ data, events, classNames, ...props }) {
   return (

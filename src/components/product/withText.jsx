@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 
 import Image from "../Image";
+import { baseUrl } from "../../config";
 
 export default function WithText({ data, events, classNames, ...props }) {
   return (
@@ -10,7 +11,10 @@ export default function WithText({ data, events, classNames, ...props }) {
       <div
         className={`slide-right w-1/2 h-full border-4 border-gray-300 rounded-xl overflow-hidden relative bg-black gap-4`}
       >
-        <Image src={data?.imageUrl} classNames="h-full" />
+        <Image
+          src={baseUrl + "/files/" + data?.fileIds[0]?._id}
+          classNames="h-full"
+        />
       </div>
       <div className="slide-left flex-1 flex flex-col justify-center gap-4 py-8">
         <h1 className="font-medium text-3xl">

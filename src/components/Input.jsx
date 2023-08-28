@@ -104,9 +104,12 @@ function Input({ classNames, events, data, ...props }) {
         name={props?.name}
         className={`${classNames} overflow-hidden w-4  text-blue-600 !bg-black border-gray-300 focus:ring-blue-500 focus:ring-2 rounded-full`}
         key={props?.key}
-        value={props?.value}
+        checked={props?.checked}
         onChange={(e) =>
           events ? events["onChange"](e.target.name, e.target.value) : {}
+        }
+        onClick={(e) =>
+          events ? events["onClick"](e.target.name, e.target.value) : {}
         }
       />
     ),

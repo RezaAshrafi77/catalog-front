@@ -33,7 +33,7 @@ export const Vitrin = ({ template, ...props }) => {
     setLoadingForFilter(true);
     setTimeout(() => {
       setLoadingForFilter(false);
-    }, 1000);
+    }, 400);
   }, [activeCat]);
 
   return (
@@ -95,8 +95,11 @@ export const Vitrin = ({ template, ...props }) => {
                         type="radio"
                         name="categories"
                         classNames="w-6"
+                        checked={cat?.name === activeCat}
                         events={{
-                          onChange: (name, value) => setActiveCat(cat?.name),
+                          onChange: (name, value) => setActiveCat(cat?.name === activeCat ? null : cat?.name),
+                          onClick: (name, value) => setActiveCat(cat?.name === activeCat ? null : cat?.name),
+
                         }}
                       />
                     </li>

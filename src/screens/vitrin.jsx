@@ -17,6 +17,7 @@ import {
   Loading,
   Carousel,
   Failed,
+  Input,
 } from "~/components";
 import Image from "../components/Image";
 import { baseUrl } from "../config";
@@ -29,22 +30,24 @@ export const Vitrin = ({ template, ...props }) => {
   return (
     <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-gradient">
       <Navbar
-        classNames="!pt-8 text-white"
+        classNames="!pt-8 text-textColor"
         leading={
-          <Button
-            icon={<MdFilterListAlt size={"2rem"} />}
-            events={{ onSubmit: () => setFilterToggle(true) }}
-            className="text-white"
-          />
+          <div className="flex items-center gap-1.5">
+            <Button
+              icon={<MdFilterListAlt size={"2rem"} />}
+              events={{ onSubmit: () => setFilterToggle(true) }}
+              className="text-textColor"
+            />
+            <span>فیلترها</span>
+          </div>
         }
         actions={[
           <Button
             icon={<MdChevronLeft size={"2.5rem"} />}
             events={{ onSubmit: () => navigation(-1) }}
-            className="text-white"
+            className="text-textColor"
           />,
         ]}
-        title="ویترین"
       />
       <Drawer
         key={"vitrin-drawer-filter"}
@@ -55,17 +58,36 @@ export const Vitrin = ({ template, ...props }) => {
           onClose: () => setFilterToggle(false),
         }}
       >
-        <div className="relative flex-1 flex flex-col px-4 bg-black bg-opacity-50 backdrop-blur-md">
+        <div className="relative flex-1 flex flex-col px-[5vw] bg-black bg-opacity-50 backdrop-blur-md">
           <Navbar
             classNames="!pt-8 !px-0"
             leading={<div></div>}
             actions={[
               <Button
-                icon={<MdClose size="2rem" color="white" />}
+                icon={<MdClose size="2rem" color="#cccccc" />}
                 events={{ onSubmit: () => setFilterToggle(false) }}
               />,
             ]}
           />
+          <div className="flex flex-col flex-1 overflow-y-scroll gap-4">
+            {template?.allPartCategoris?.length || true ? (
+              <>
+                <div className="w-full flex justify-between border-solid border-b border-[#555] pb-3">
+                  <span className="text-lg font-medium">دسته بندی‌ها</span>
+                </div>
+                <ul className="flex flex-col gap-8 pt-4">
+                  {template?.allPartCategoris?.map((cat, index) => (
+                    <li className="w-full flex justify-between">
+                      <strong className="text-base font-medium">
+                        {cat?.name}
+                      </strong>
+                      <Input type="radio" name="categories" classNames="w-6" />
+                    </li>
+                  ))}
+                </ul>
+              </>
+            ) : null}
+          </div>
         </div>
       </Drawer>
       <Drawer
@@ -84,7 +106,7 @@ export const Vitrin = ({ template, ...props }) => {
               <Button
                 icon={<MdChevronRight size={"2.5rem"} />}
                 events={{ onSubmit: () => setPart(null) }}
-                className="text-white"
+                className="text-textColor"
               />
             }
           />
@@ -111,17 +133,17 @@ export const Vitrin = ({ template, ...props }) => {
             />
           ) : null}
           <div className="flex flex-col px-[8vw] pt-16">
-            <strong className="text-white text-3xl font-bold">
+            <strong className="text-textColor text-3xl font-bold">
               {part?.title}
             </strong>
           </div>
         </div>
       </Drawer>
       {template ? (
-        template?.parts?.length  ? (
+        template?.parts?.length ? (
           <div className="h-full overflow-y-scroll pb-[10vh]">
             <div
-              className={`grid grid-cols-2 gap-3 px-4 py-10 min-h-full overflow-x-hidden`}
+              className={`grid grid-cols-2 gap-3 px-4 py-10 overflow-x-hidden`}
             >
               {template?.parts?.map((part, index) => (
                 <>
@@ -169,8 +191,6 @@ export const Vitrin = ({ template, ...props }) => {
     </div>
   );
 };
-
-// 1,3,7,9,12,14,18
 
 const mapStateToProps = (state) => ({
   template: state.template.template,

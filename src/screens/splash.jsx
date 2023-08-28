@@ -7,10 +7,10 @@ export const Splash = ({ }) => {
 
   return (
     <div className="relative flex flex-1 flex-col justify-center items-center max-w-full max-h-full h-full overflow-hidden bg-primary">
-      <h1 className="text-white font-[tahoma] text-[50px] animate-pulse">
+      <h1 className="text-textColor font-[tahoma] text-[50px] animate-pulse">
         Cardino
       </h1>
-      <span className="flex fixed bottom-8 left-1/2 -translate-x-1/2 text-white z-50 text-sm">
+      <span className="flex fixed bottom-8 left-1/2 -translate-x-1/2 text-textColor z-50 text-sm">
         <pre>0.0.1 </pre>Version
       </span>
     </div>

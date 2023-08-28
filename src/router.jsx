@@ -62,7 +62,7 @@ export const Router = ({ getTemplateApi, template }) => {
   return (
     <div className={`dark h-full`}>
       <div
-        className={`flex flex-col h-full w-full rtl overflow-x-hidden bg-gradient text-white lg:py-0`}
+        className={`flex flex-col h-full w-full rtl overflow-x-hidden bg-gradient text-textColor lg:py-0`}
       >
         {/* {menuFullLayer ? <MenuFullLayer /> : null} */}
         <BrowserRouter>

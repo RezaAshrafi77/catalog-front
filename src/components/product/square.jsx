@@ -15,7 +15,7 @@ export default function Square({ data, events, classNames, ...props }) {
         classNames={`min-w-[45vw] min-h-[45vw] max-h-[45vw] object-cover`}
       />
       {data?.categoryIds?.length ? (
-        <span className="text-sm absolute right-1 bottom-2 px-3 py-0.5 rounded-full backdrop-blur-lg bg-black bg-opacity-20 text-white">
+        <span className="text-sm absolute right-1 bottom-2 px-3 py-0.5 rounded-full backdrop-blur-lg bg-black bg-opacity-50 text-white">
           {data?.categoryIds[0]?.name}
         </span>
       ) : null}

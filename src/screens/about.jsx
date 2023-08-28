@@ -9,13 +9,13 @@ export const About = ({ template }) => {
   return (
     <div className="flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden px-[8vw] ">
       <Navbar
-        classNames="!pt-8 text-white !px-0"
+        classNames="!pt-8 text-textColor !px-0"
         leading={<div></div>}
         actions={[
           <Button
             icon={<MdChevronLeft size={"11vw"} />}
             events={{ onSubmit: () => navigation(-1) }}
-            className="text-white"
+            className="text-textColor"
           />,
         ]}
       />
@@ -60,7 +60,7 @@ export const About = ({ template }) => {
         <li className="flex items-center gap-4 py-6">
           <MdOutlineLocationOn size="2rem" color="red" />
           {template?.about?.address ? (
-            <p className="text-base text-white flex-1 leading-6">
+            <p className="text-base text-textColor flex-1 leading-6">
               {template?.about?.address}
             </p>
           ) : null}

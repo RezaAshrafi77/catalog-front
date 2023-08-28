@@ -11,7 +11,7 @@
   .flex-center-center {
     @apply flex justify-center items-center;
   }
-  .bg-gradient{
+  .bg-gradient {
     @apply bg-gradient-to-b from-[#171120] to-[#39355d];
   }
 }
@@ -87,7 +87,6 @@ button {
   animation: hero 1s 1;
 }
 
-
 @keyframes slideLeft {
   from {
     transform: translateX(calc(-100vw - 100%));
@@ -151,7 +150,7 @@ button {
 }
 
 // extra classes
-.snap-align-start{
+.snap-align-start {
   scroll-snap-align: start;
 }
 

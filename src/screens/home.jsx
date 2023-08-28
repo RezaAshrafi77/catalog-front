@@ -26,13 +26,13 @@ export const Home = ({ template, ...props }) => {
       />
       <div className="bg-black bg-opacity-50 w-full h-full fixed top-0 left-0"></div>
       <Navbar
-        classNames="!pt-8 text-white backdrop-blur-sm"
+        classNames="!pt-8 text-textColor backdrop-blur-sm"
         leading={
           <></>
           // <Button
           //   icon={<MdMenu size={"11vw"} />}
           //   events={{ onSubmit: () => setMenuToggle(true) }}
-          //   className="text-white"
+          //   className="text-textColor"
           // />
         }
       />
@@ -46,14 +46,14 @@ export const Home = ({ template, ...props }) => {
       >
         <div className="relative flex-1 flex flex-col pt-[20vh] pr-[8vw] pb-[6vh] gap-[6vh] bg-black bg-opacity-50 backdrop-blur-md">
           <Button
-            icon={<MdClose size="10vw" color="white" />}
+            icon={<MdClose size="10vw" color="#cccccc" />}
             events={{ onSubmit: () => setMenuToggle(false) }}
             classNames={"absolute left-[8vw] top-[8vw]"}
           />
         </div>
       </Drawer>
       <div className="w-full flex flex-col flex-center-center gap-5 z-50 backdrop-blur-lg px-[8vw] pt-8 pb-[6vh] rounded-3xl bg-black bg-opacity-20 overflow-hidden">
-        <h1 className="text-white opacity-75 text-3xl font-medium mb-[8vh]">
+        <h1 className="text-textColor opacity-75 text-3xl font-medium mb-[8vh]">
           {template?.name}
         </h1>
         <Button

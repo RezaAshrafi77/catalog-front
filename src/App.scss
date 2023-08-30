@@ -150,6 +150,11 @@ button {
 }
 
 // extra classes
+
+.shadow-product{
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
 .snap-align-start {
   scroll-snap-align: start;
 }
@@ -159,7 +164,7 @@ button {
   height: 10px;
 }
 .snap-mandatory::-webkit-scrollbar-thumb {
-  background: rgb(113, 39, 160);
+  background: rgb(239, 68, 68);
   border-radius: 10px;
 }
 .snap-mandatory::-webkit-scrollbar-track {

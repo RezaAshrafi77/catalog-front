@@ -14,7 +14,8 @@ export default {
         transparent: "transparent",
         background: "#cbcbcb",
         primary: "#452e6f",
-        textColor: "#cccccc"
+        textColor: "#595C7A",
+        surface: "#F1F2F4",
       },
     },
   },

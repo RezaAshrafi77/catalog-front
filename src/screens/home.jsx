@@ -9,13 +9,24 @@ import { baseUrl } from "../config";
 export const Home = ({ template, ...props }) => {
   const navigation = useNavigate();
   const [menuToggle, setMenuToggle] = useState(false);
-  const [navigateLoadings, setNavigateLoading] = useState({
-    vitrin: false,
-    about: false,
-  });
+
+  const routes = [
+    {
+      title: "مشاهده ویترین",
+      action: () => {
+        navigation("vitrin");
+      },
+    },
+    {
+      title: "درباره ما",
+      action: () => {
+          navigation("about-us");
+      },
+    },
+  ];
 
   return (
-    <div className="flex flex-1 flex-col flex-center-center max-w-full max-h-full h-full overflow-hidden bg-black px-[8vw]">
+    <div className="flex flex-1 flex-col justify-end max-w-full max-h-full h-full overflow-hidden">
       <Image
         src={baseUrl + "/files/" + template?.backgroundFileId?._id}
         classNames="fixed top-0 left-0 w-full h-full object-fit"
@@ -24,9 +35,9 @@ export const Home = ({ template, ...props }) => {
         }}
         loading="lazy"
       />
-      <div className="bg-black bg-opacity-50 w-full h-full fixed top-0 left-0"></div>
+      <div className="bg-black bg-opacity-60 w-full h-full fixed top-0 left-0"></div>
       <Navbar
-        classNames="!pt-8 text-textColor backdrop-blur-sm"
+        classNames="!fixed !pt-8 !text-[#bbb] backdrop-blur-sm"
         leading={
           <></>
           // <Button
@@ -35,8 +46,15 @@ export const Home = ({ template, ...props }) => {
           //   className="text-textColor"
           // />
         }
+        title="کاردینو"
       />
-      <Drawer
+      <h1 className="z-50 px-[8vw] text-3xl pb-4 text-[#bbb] font-bold">
+        {template?.name}
+      </h1>
+      <p className="z-50 px-[8vw] pb-[6vh] text-lg text-[#aaa] font-medium text-opacity-75">
+        {template?.subtitle}
+      </p>
+      {/* <Drawer
         open={menuToggle}
         direction="right"
         size="80%"
@@ -51,43 +69,24 @@ export const Home = ({ template, ...props }) => {
             classNames={"absolute left-[8vw] top-[8vw]"}
           />
         </div>
-      </Drawer>
-      <div className="w-full flex flex-col flex-center-center gap-5 z-50 backdrop-blur-lg px-[8vw] pt-8 pb-[6vh] rounded-3xl bg-black bg-opacity-20 overflow-hidden">
-        <h1 className="text-textColor opacity-75 text-3xl font-medium mb-[8vh]">
-          {template?.name}
-        </h1>
-        <Button
-          key={0}
-          loading={navigateLoadings?.vitrin}
-          title="مشاهده ویترین"
-          color="primary"
-          type="contained"
-          classNames="!bg-primary"
-          events={{
-            onSubmit: (e) => {
-              setNavigateLoading({ ...navigateLoadings, vitrin: true });
-              setTimeout(() => {
-                navigation("vitrin");
-              }, 1500);
-            },
-          }}
-        />
-        <Button
-          key={1}
-          title="اطلاعات تماس"
-          loading={navigateLoadings?.about}
-          color="primary"
-          type="outlined"
-          classNames="!bg-white !text-primary"
-          events={{
-            onSubmit: (e) => {
-              setNavigateLoading({ ...navigateLoadings, about: true });
-              setTimeout(() => {
-                navigation("about-us");
-              }, 1500);
-            },
-          }}
-        />
+      </Drawer> */}
+      <div className="w-full flex flex-col divide-y-2 divide-white flex-center-center z-50 bg-black bg-opacity-20 overflow-hidden px-[8vw]">
+        {routes?.map((route, index) => (
+          <Button
+            key={index}
+            title={route?.title}
+            color="primary"
+            type="outlined"
+            classNames={`!text-[#bbb] !justify-start !rounded-none min-h-[10vh] !max-h-[70px] ${
+              routes?.length - 1 !== index
+                ? "!border-b !border-x-0 !border-t-0 !border-solid !border-[#666]"
+                : ""
+            }`}
+            events={{
+              onSubmit: route?.action,
+            }}
+          />
+        ))}
       </div>
     </div>
   );

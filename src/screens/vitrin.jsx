@@ -37,17 +37,20 @@ export const Vitrin = ({ template, ...props }) => {
   }, [activeCat]);
 
   return (
-    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-gradient">
+    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden">
       <Navbar
-        classNames="!pt-8 text-textColor"
+        classNames="!pt-8 text-textColor bg-surface"
         leading={
-          <div className="flex items-center gap-1.5">
+          <div
+            className="flex items-center gap-1.5"
+            onClick={() => setFilterToggle(true)}
+          >
             <Button
               icon={<MdFilterListAlt size={"2rem"} />}
-              events={{ onSubmit: () => setFilterToggle(true) }}
+              events={{ onSubmit: () => {} }}
               className="text-textColor"
             />
-            <span>فیلترها</span>
+            <span className="font-medium">فیلترها</span>
           </div>
         }
         actions={[
@@ -67,13 +70,13 @@ export const Vitrin = ({ template, ...props }) => {
           onClose: () => setFilterToggle(false),
         }}
       >
-        <div className="relative flex-1 flex flex-col px-[5vw] bg-black bg-opacity-50 backdrop-blur-md">
+        <div className="relative flex-1 flex flex-col px-[5vw] bg-white bg-opacity-50 backdrop-blur-md">
           <Navbar
             classNames="!pt-8 !px-0"
             leading={<div></div>}
             actions={[
               <Button
-                icon={<MdClose size="2rem" color="#cccccc" />}
+                icon={<MdClose size="2rem" color="#cccccc" className="!text-textColor" />}
                 events={{ onSubmit: () => setFilterToggle(false) }}
               />,
             ]}
@@ -81,7 +84,7 @@ export const Vitrin = ({ template, ...props }) => {
           <div className="flex flex-col flex-1 overflow-y-scroll gap-4">
             {template?.allPartCategories?.length ? (
               <>
-                <div className="w-full flex justify-between border-solid border-b border-[#555] pb-3">
+                <div className="w-full flex justify-between border-solid border-b border-[#aaa] pb-3">
                   <span className="text-lg font-medium">دسته بندی‌ها</span>
                 </div>
                 <ul className="flex flex-col gap-8 pt-4">
@@ -97,9 +100,14 @@ export const Vitrin = ({ template, ...props }) => {
                         classNames="w-6"
                         checked={cat?.name === activeCat}
                         events={{
-                          onChange: (name, value) => setActiveCat(cat?.name === activeCat ? null : cat?.name),
-                          onClick: (name, value) => setActiveCat(cat?.name === activeCat ? null : cat?.name),
-
+                          onChange: (name, value) =>
+                            setActiveCat(
+                              cat?.name === activeCat ? null : cat?.name
+                            ),
+                          onClick: (name, value) =>
+                            setActiveCat(
+                              cat?.name === activeCat ? null : cat?.name
+                            ),
                         }}
                       />
                     </li>
@@ -119,7 +127,7 @@ export const Vitrin = ({ template, ...props }) => {
           onClose: () => setPart(null),
         }}
       >
-        <div className="relative flex-1 flex flex-col bg-gradient-to-b from-[#171120] to-[#39355d]">
+        <div className="relative flex-1 flex flex-col bg-white">
           <Navbar
             classNames="!pt-8"
             leading={
@@ -163,7 +171,7 @@ export const Vitrin = ({ template, ...props }) => {
         template?.parts?.length ? (
           <div className="h-full overflow-y-scroll pb-[10vh]">
             <div
-              className={`grid grid-cols-2 gap-3 px-4 py-10 overflow-x-hidden`}
+              className={`grid grid-cols-2 gap-x-6 gap-y-10 px-[8vw] pt-6 pb-10 overflow-x-hidden`}
             >
               {(activeCat
                 ? template?.parts?.filter((part) =>
@@ -171,33 +179,17 @@ export const Vitrin = ({ template, ...props }) => {
                   )
                 : template?.parts
               )?.map((part, index) => (
-                <>
-                  {template?.parts?.length < 3 ? (
-                    <Product
-                      data={part}
-                      key={"vitrin-items-" + index}
-                      style={"square"}
-                      events={{
-                        onClick: () => setPart(part),
-                      }}
-                    />
-                  ) : (
-                    <Product
-                      data={part}
-                      key={"vitrin-items-" + index}
-                      style={
-                        index === 1 ||
-                        ((index - 1) % 6 === 0 && index !== 1) ||
-                        (index % 3 === 0 && index % 2 !== 0)
-                          ? "portrait"
-                          : "square"
-                      }
-                      events={{
-                        onClick: () => setPart(part),
-                      }}
-                    />
-                  )}
-                </>
+                <Product
+                  classNames={`max-h-[55vw] min-h-[55vw] ${
+                    index !== 0 ? (index % 2 !== 0 ? "translate-y-10" : "") : ""
+                  }`}
+                  data={part}
+                  key={"vitrin-items-" + index}
+                  style={"square"}
+                  events={{
+                    onClick: () => setPart(part),
+                  }}
+                />
               ))}
             </div>
           </div>

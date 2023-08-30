@@ -35,6 +35,7 @@ export default function Button({ events, data, classNames, ...props }) {
       onClick={(e) => events["onSubmit"](e)}
       className={classNames + " " + className}
       style={buttonStyle}
+      key={props?.key}
       {...props}
     >
       {props?.loading ? (

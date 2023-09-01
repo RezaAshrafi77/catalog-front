@@ -1,4 +1,7 @@
-@use "three-dots";
+@use "three-dots" with (
+  $dot-color: rgb(239, 68, 68),
+  $dot-bg-color: rgb(239, 68, 68)
+);
 
 @tailwind base;
 @tailwind components;
@@ -151,8 +154,9 @@ button {
 
 // extra classes
 
-.shadow-product{
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+.shadow-product {
+  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px,
+    rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .snap-align-start {

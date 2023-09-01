@@ -39,7 +39,7 @@ export const Vitrin = ({ template, ...props }) => {
   return (
     <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden">
       <Navbar
-        classNames="!pt-8 text-textColor bg-surface"
+        classNames="text-textColor bg-surface"
         leading={
           <div
             className="flex items-center gap-1.5"
@@ -72,7 +72,7 @@ export const Vitrin = ({ template, ...props }) => {
       >
         <div className="relative flex-1 flex flex-col px-[5vw] bg-white bg-opacity-50 backdrop-blur-md">
           <Navbar
-            classNames="!pt-8 !px-0"
+            classNames="!px-0"
             leading={<div></div>}
             actions={[
               <Button
@@ -129,7 +129,7 @@ export const Vitrin = ({ template, ...props }) => {
       >
         <div className="relative flex-1 flex flex-col bg-white">
           <Navbar
-            classNames="!pt-8"
+            classNames="bg-surface"
             leading={
               <Button
                 icon={<MdChevronRight size={"2.5rem"} />}
@@ -141,7 +141,7 @@ export const Vitrin = ({ template, ...props }) => {
           {part?.fileIds?.length > 1 ? (
             part ? (
               <Carousel
-                classNames="w-[100vw] overflow-x-auto snap-x snap-mandatory scroll-smooth h-[40vh]"
+                classNames="w-[100vw] mt-2 overflow-x-auto snap-x snap-mandatory scroll-smooth h-[60vw]"
                 render={part?.fileIds?.map((file, index) => (
                   <Image
                     key={"carousel-items-" + index}
@@ -160,8 +160,8 @@ export const Vitrin = ({ template, ...props }) => {
               events={{ onClick: () => {} }}
             />
           ) : null}
-          <div className="flex flex-col px-[8vw] pt-16">
-            <strong className="text-textColor text-3xl font-bold">
+          <div className="flex flex-col px-[8vw] pt-8">
+            <strong className="text-textColor text-xl font-bold">
               {part?.title}
             </strong>
           </div>

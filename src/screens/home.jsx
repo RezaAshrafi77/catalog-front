@@ -12,15 +12,15 @@ export const Home = ({ template, ...props }) => {
 
   const routes = [
     {
-      title: "مشاهده ویترین",
+      title: template?.ui?.buttonOfVitrine,
       action: () => {
         navigation("vitrin");
       },
     },
     {
-      title: "درباره ما",
+      title: template?.ui?.buttonOfAbout,
       action: () => {
-          navigation("about-us");
+        navigation("about-us");
       },
     },
   ];
@@ -30,28 +30,22 @@ export const Home = ({ template, ...props }) => {
       <Image
         src={baseUrl + "/files/" + template?.backgroundFileId?._id}
         classNames="fixed top-0 left-0 w-full h-full object-fit"
-        style={{
-          filter: "grayscale(80%)",
-        }}
+        style={
+          {
+            // filter: "grayscale(30%)",
+          }
+        }
         loading="lazy"
       />
-      <div className="bg-black bg-opacity-60 w-full h-full fixed top-0 left-0"></div>
+      <div className="bg-black bg-opacity-50 w-full h-full fixed top-0 left-0"></div>
       <Navbar
-        classNames="!fixed !pt-8 !text-[#bbb] backdrop-blur-sm"
-        leading={
-          <></>
-          // <Button
-          //   icon={<MdMenu size={"11vw"} />}
-          //   events={{ onSubmit: () => setMenuToggle(true) }}
-          //   className="text-textColor"
-          // />
-        }
-        title="کاردینو"
+        classNames="!fixed !pt-8 !text-white backdrop-blur-sm"
+        title="کاتالوگ"
       />
-      <h1 className="z-50 px-[8vw] text-3xl pb-4 text-[#bbb] font-bold">
+      <h1 className="z-50 px-[8vw] text-3xl pb-4 text-white font-bold">
         {template?.name}
       </h1>
-      <p className="z-50 px-[8vw] pb-[6vh] text-lg text-[#aaa] font-medium text-opacity-75">
+      <p className="z-50 px-[8vw] pb-[6vh] text-lg text-white font-medium text-opacity-75">
         {template?.subtitle}
       </p>
       {/* <Drawer
@@ -77,7 +71,7 @@ export const Home = ({ template, ...props }) => {
             title={route?.title}
             color="primary"
             type="outlined"
-            classNames={`!text-[#bbb] !justify-start !rounded-none min-h-[10vh] !max-h-[70px] ${
+            classNames={`!text-white !justify-start !rounded-none min-h-[10vh] !max-h-[70px] ${
               routes?.length - 1 !== index
                 ? "!border-b !border-x-0 !border-t-0 !border-solid !border-[#666]"
                 : ""

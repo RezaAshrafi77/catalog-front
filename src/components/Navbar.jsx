@@ -3,9 +3,9 @@ import React from "react";
 export default function Navbar({ data, events, classNames, ...props }) {
   return (
     <nav
-      className={`${classNames} sticky top-0 w-full pt-[5vh] z-30 pb-[2vh] px-[6vw]`}
+      className={`${classNames} sticky top-0 w-full min-h-[70px] z-30 px-[6vw]`}
     >
-      <div className="relative w-full flex justify-between items-center">
+      <div className="relative w-full flex justify-between h-full items-center">
         {props?.leading}
         {props?.searchField}
         {props?.title ? (

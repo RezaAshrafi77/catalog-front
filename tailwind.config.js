@@ -12,10 +12,10 @@ export default {
     extend: {
       colors: {
         transparent: "transparent",
-        background: "#cbcbcb",
+        background: "#f1f1f1",
         primary: "#452e6f",
         textColor: "#595C7A",
-        surface: "#F1F2F4",
+        surface: "#e1e1e1",
       },
     },
   },

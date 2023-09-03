@@ -40,7 +40,7 @@ export const Home = ({ template, ...props }) => {
       <div className="bg-black bg-opacity-50 w-full h-full fixed top-0 left-0"></div>
       <Navbar
         classNames="!fixed !pt-8 !text-white backdrop-blur-sm"
-        title="کاتالوگ"
+        logo={<Image src="/icons/logo.svg" classNames="w-10 rounded-md" />}
       />
       <h1 className="z-50 px-[8vw] text-3xl pb-4 text-white font-bold">
         {template?.name}

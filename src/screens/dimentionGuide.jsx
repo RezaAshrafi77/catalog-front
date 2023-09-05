@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Failed } from "~/components";
-import { TbInfoCircle, TbError404 } from "react-icons/tb";
+import { TbInfoCircle } from "react-icons/tb";
 
 export default function DimentionGuide({}) {
   return (

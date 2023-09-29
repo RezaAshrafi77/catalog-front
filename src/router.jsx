@@ -14,6 +14,7 @@ import {
   About,
   NotFound,
   DimentionGuide,
+  Product,
 } from "./screens";
 import { checkDevice } from "./utils/funcs";
 // import { MenuFullLayer } from "~/components";
@@ -62,7 +63,7 @@ export const Router = ({ getTemplateApi, template }) => {
   return (
     <div className={`dark h-full`}>
       <div
-        className={`flex flex-col h-full w-full rtl overflow-x-hidden bg-background text-textColor lg:py-0`}
+        className={`flex flex-col h-full w-full rtl overflow-x-hidden lg:py-0`}
       >
         {/* {menuFullLayer ? <MenuFullLayer /> : null} */}
         <BrowserRouter>
@@ -73,7 +74,13 @@ export const Router = ({ getTemplateApi, template }) => {
                   path="/:id"
                   element={homeIsReady ? <Home /> : <Splash />}
                 />
-                <Route path="/:id/vitrin" element={<Vitrin />} />
+                <Route
+                  path="/:id/vitrin"
+                  element={
+                    <Vitrin position={template?.position || "furniture"} />
+                  }
+                />
+                <Route path="/:id/vitrin/:id" element={<Product />} />
                 <Route path="/:id/about-us" element={<About />} />
                 <Route path="*" element={<NotFound />} />
               </>

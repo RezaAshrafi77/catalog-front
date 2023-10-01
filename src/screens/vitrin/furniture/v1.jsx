@@ -126,7 +126,7 @@ export const V1 = ({ template }) => {
                   }`}
                   data={part}
                   key={"vitrin-items-" + index}
-                  style={"square"}
+                  style={"withTag"}
                   events={{
                     onClick: () => setPart(part),
                   }}

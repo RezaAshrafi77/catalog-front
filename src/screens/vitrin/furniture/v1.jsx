@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { MdChevronRight, MdClose, MdFilterListAlt } from "react-icons/md";
 import { TbMoodEmpty } from "react-icons/tb";
 import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
 import {
   Navbar,
   Button,
@@ -13,6 +15,7 @@ import {
 } from "~/components";
 
 export const V1 = ({ template }) => {
+  const navigation = useNavigate();
   const [loadingForFilter, setLoadingForFilter] = useState(false);
   const [activeCat, setActiveCat] = useState(null);
   const [filterToggle, setFilterToggle] = useState(false);

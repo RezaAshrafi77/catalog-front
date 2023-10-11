@@ -27,7 +27,7 @@ export const About = ({ template }) => {
             <li className="flex items-center gap-4 py-3">
               <TbPhoneCall size="2rem" className="text-green-600" />
               <a
-                href={`tel::${template?.cellNumber || "09360467907"}`}
+                href={`tel:${template?.cellNumber || "09360467907"}`}
                 className="text-base text-green-600 underline"
               >
                 {template?.about?.cellphone}
@@ -50,7 +50,7 @@ export const About = ({ template }) => {
             <li className="flex items-center gap-4 py-5">
               <TbBrandTelegram size="2rem" color="#2A88F7" />
               <a
-                href={"https://instagram.com/" + template?.instagramID}
+                href={"https://telegram.com/" + template?.about?.telegram}
                 target="_blank"
                 className="text-base text-[#2A88F7] underline"
               >

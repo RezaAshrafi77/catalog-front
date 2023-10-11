@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { MdChevronRight, MdClose, MdFilterListAlt } from "react-icons/md";
+import { MdChevronLeft, MdClose, MdFilterListAlt, MdOutlineMenu } from "react-icons/md";
 import { TbMoodEmpty } from "react-icons/tb";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -32,21 +32,21 @@ export const V1 = ({ template }) => {
       <Navbar
         classNames="text-textColor bg-purple-400 bg-opacity-30 text-[#c1c1c1] pl-3"
         leading={
-          <Button
-            icon={<MdChevronRight color="#c1c1c1" size={"2rem"} />}
-            events={{ onSubmit: () => navigation(-1) }}
-          />
-        }
-        actions={[
           <div
             className="flex items-center gap-1.5"
             onClick={() => setFilterToggle(true)}
           >
             <Button
-              icon={<MdFilterListAlt color="#c1c1c1" size={"2rem"} />}
+              icon={<MdOutlineMenu color="#c1c1c1" size={"2rem"} />}
               events={{ onSubmit: () => {} }}
             />
-          </div>,
+          </div>
+        }
+        actions={[
+          <Button
+            icon={<MdChevronLeft color="#c1c1c1" size={"2.5rem"} />}
+            events={{ onSubmit: () => navigation(-1) }}
+          />,
         ]}
       />
       <Drawer
@@ -64,12 +64,7 @@ export const V1 = ({ template }) => {
             leading={<div></div>}
             actions={[
               <Button
-                icon={
-                  <MdClose
-                    size="2rem"
-                    color="#c1c1c1"
-                  />
-                }
+                icon={<MdClose size="2rem" color="#c1c1c1" />}
                 events={{ onSubmit: () => setFilterToggle(false) }}
               />,
             ]}
@@ -131,7 +126,8 @@ export const V1 = ({ template }) => {
                   key={"vitrin-items-" + index}
                   style={"withTag"}
                   events={{
-                    onClick: () => setPart(part),
+                    onClick: () =>
+                      navigation(part?._id, { state: { id: part?._id } }),
                   }}
                 />
               ))}

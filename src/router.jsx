@@ -14,7 +14,7 @@ import {
   About,
   NotFound,
   DimentionGuide,
-  Product,
+  ProductInfo,
 } from "./screens";
 import { checkDevice } from "./utils/funcs";
 // import { MenuFullLayer } from "~/components";
@@ -80,7 +80,12 @@ export const Router = ({ getTemplateApi, template }) => {
                     <Vitrin position={template?.position || "furniture"} />
                   }
                 />
-                <Route path="/:id/vitrin/:id" element={<Product />} />
+                <Route
+                  path="/:id/vitrin/:id"
+                  element={
+                    <ProductInfo position={template?.position || "furniture"} />
+                  }
+                />
                 <Route path="/:id/about-us" element={<About />} />
                 <Route path="*" element={<NotFound />} />
               </>

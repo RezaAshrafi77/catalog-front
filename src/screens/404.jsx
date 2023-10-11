@@ -18,7 +18,7 @@ export default function NotFound({}) {
           <Button
             title="بازگشت به صفحه قبل"
             type="outlined"
-            classNames="text-primary !border !border-white !border-solid !px-4 w-fit"
+            classNames="!text-[orange] !border !border-[orange] !border-solid !px-4 w-fit"
             events={{
               onSubmit: (e) => {
                 navigation(-1);

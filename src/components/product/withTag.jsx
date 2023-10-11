@@ -6,16 +6,16 @@ import { baseUrl } from "../../config";
 export default function Square({ data, events, classNames, ...props }) {
   return (
     <div
-      className={`${classNames} relative min-h-[45vw] max-h-[45vw] rounded-xl border shadow-product overflow-hidden gap-4`}
+      className={`${classNames} relative min-h-[45vw] max-h-[45vw] rounded-xl border border-[#ffffff55] shadow-product overflow-hidden gap-4`}
       onClick={() => events["onClick"]()}
     >
       <Image
         events={{ onClick: () => {} }}
         src={baseUrl + "/files/" + data?.fileIds[0]?._id}
-        classNames={`min-w-full min-h-full h-full object-cover`}
+        classNames={`min-w-full min-h-full h-full object-contain bg-white bg-opacity-20`}
       />
       {data?.categoryIds?.length ? (
-        <span className="text-xs absolute right-1 bottom-2 px-3 py-0.5 rounded-full backdrop-blur-lg bg-black bg-opacity-50 text-white">
+        <span className="text-xs absolute right-1 bottom-2 px-3 py-0.5 rounded-full backdrop-blur-lg bg-white font-medium text-black">
           {data?.categoryIds[0]?.name}
         </span>
       ) : null}

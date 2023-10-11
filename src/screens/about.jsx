@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { TbPhoneCall, TbBrandInstagram, TbInfoCircle, TbBrandTelegram } from "react-icons/tb";
 import { Navbar, Button, Image } from "~/components";
+import { baseUrl } from "../config";
 
 export const About = ({ template }) => {
   const navigation = useNavigate();
@@ -17,8 +18,14 @@ export const About = ({ template }) => {
             className="text-white"
           />,
         ]}
+        classNames="bg-black bg-opacity-80"
       />
-      <div className="flex-1 flex flex-col overflow-y-scroll px-[8vw] pt-6 pb-[10vh]">
+      <Image
+        src={baseUrl + "/files/" + template?.backgroundFileId?._id}
+        classNames="fixed top-0 left-0 w-full h-full !object-cover"
+        loading="lazy"
+      />
+      <div className="z-10 flex-1 bg-black bg-opacity-80 flex flex-col overflow-y-scroll px-[8vw] pt-6 pb-[10vh]">
         <h1 className="text-2xl font-bold text-white">
           {template?.about?.title}
         </h1>

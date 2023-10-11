@@ -35,6 +35,9 @@ export const V1 = ({ template, loading }) => {
           <Image
             src={baseUrl + "/files/" + part?.fileIds[0]?._id}
             classNames="w-full flex-contain bg-black border-b border-[#ffffff33] bg-opacity-10"
+            events={{
+              onClick: () => navigation("album"),
+            }}
           />
           <ul className="flex flex-col divide-y divide-white divide-opacity-10 py-6 px-4">
             <li className="grid grid-cols-2 gap-4">
@@ -48,8 +51,11 @@ export const V1 = ({ template, loading }) => {
             <li className="grid grid-cols-2 gap-4">
               <b className="font-bold text-xs py-6"> دسته بندی‌ها:</b>
               <div className="flex gap-4 flex-wrap font-medium text-xs py-5">
-                {part?.categoryIds?.map((cat) => (
-                  <span className="bg-gray-600 text-white px-2 py-1 rounded-full">
+                {part?.categoryIds?.map((cat, index) => (
+                  <span
+                    key={"cat" + index}
+                    className="bg-gray-600 text-white px-2 py-1 rounded-full"
+                  >
                     {cat?.name}
                   </span>
                 ))}

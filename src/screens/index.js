@@ -5,3 +5,4 @@ export { default as About } from "./about";
 export { default as NotFound } from "./404";
 export { default as DimentionGuide } from "./dimentionGuide";
 export { default as ProductInfo } from "./productInfo/index.jsx";
+export { default as Images } from "./images";

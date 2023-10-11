@@ -11,6 +11,7 @@ export default function Image({ data, classNames, events, ...props }) {
       style={props.style}
       loading="lazy"
       ref={props?.refs}
+      key={props?.key}
     />
   ) : (
     <div

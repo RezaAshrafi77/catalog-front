@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 // redux-actions
 // import { setMode } from "~/states/slices/Device";
-import { template } from "./redux/actions";
 
 //components
 import {
@@ -15,19 +14,19 @@ import {
   NotFound,
   DimentionGuide,
   ProductInfo,
+  Images,
 } from "./screens";
 import { checkDevice } from "./utils/funcs";
 // import { MenuFullLayer } from "~/components";
 
 let splashInterval;
-export const Router = ({ getTemplateApi, template }) => {
+export const Router = ({ template }) => {
   const [splashDuration, setSplashDuration] = useState(3);
   const [homeIsReady, setHomeIsReady] = useState(false);
   const [device, setDevice] = useState("mobile");
 
   useEffect(() => {
     // get data
-    getTemplateApi({ id: window.location.pathname.split("/")[1] });
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -86,6 +85,7 @@ export const Router = ({ getTemplateApi, template }) => {
                     <ProductInfo position={template?.position || "furniture"} />
                   }
                 />
+                <Route path="/:id/vitrin/:id/album" element={<Images />} />
                 <Route path="/:id/about-us" element={<About />} />
                 <Route path="*" element={<NotFound />} />
               </>
@@ -103,8 +103,4 @@ const mapStateToProps = (state) => ({
   template: state.template.template,
 });
 
-const mapDispatchToProps = {
-  getTemplateApi: template.getTemplate,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Router);
+export default connect(mapStateToProps)(Router);

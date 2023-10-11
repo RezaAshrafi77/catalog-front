@@ -21,7 +21,7 @@ export default function NotFound({}) {
             classNames="!text-[orange] !border !border-[orange] !border-solid !px-4 w-fit"
             events={{
               onSubmit: (e) => {
-                navigation(-1);
+                navigation("652430fe3663591a4aee4f04");
               },
             }}
           />

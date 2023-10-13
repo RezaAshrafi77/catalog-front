@@ -79,7 +79,7 @@ export const V1 = ({ template, loading }) => {
               </li>
             </ul>
           </div>
-          {(isSofa && template?.price) || 1 ? (
+          {(isSofa && template?.price) ? (
             <div className="flex flex-col w-full px-4">
               <b className="font-bold text-sm w-full underline underline-offset-8 mt-4 text-yellow-400">
                 قیمت هر بخش

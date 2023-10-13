@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { Failed, Button } from "~/components";
@@ -6,6 +6,10 @@ import { TbError404 } from "react-icons/tb";
 
 export default function NotFound({}) {
   const navigation = useNavigate();
+
+  useEffect(() => {
+    navigation("652430fe3663591a4aee4f04");
+  },[]);
 
   return (
     <div className="flex flex-1 flex-col flex-center-center max-w-full max-h-full h-full overflow-hidden px-[8vw]">

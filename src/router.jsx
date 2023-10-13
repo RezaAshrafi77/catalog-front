@@ -17,16 +17,20 @@ import {
   Images,
 } from "./screens";
 import { checkDevice } from "./utils/funcs";
+import { template } from "./redux/actions";
 // import { MenuFullLayer } from "~/components";
 
 let splashInterval;
-export const Router = ({ template }) => {
+export const Router = ({ getTemplateApi, template }) => {
   const [splashDuration, setSplashDuration] = useState(3);
   const [homeIsReady, setHomeIsReady] = useState(false);
   const [device, setDevice] = useState("mobile");
 
   useEffect(() => {
     // get data
+    if (!template) {
+      getTemplateApi({ id: window.location.pathname.split("/")[1] });
+    }
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -103,4 +107,8 @@ const mapStateToProps = (state) => ({
   template: state.template.template,
 });
 
-export default connect(mapStateToProps)(Router);
+const mapDispatchToProps = {
+  getTemplateApi: template.getTemplate,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Router);

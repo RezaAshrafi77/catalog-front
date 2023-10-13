@@ -40,7 +40,7 @@ export const Home = ({ template, ...props }) => {
       <h1 className="z-50 px-6 text-2xl pb-4 text-white font-bold">
         {template?.name}
       </h1>
-      <p className="z-50 px-6 pb-[6vh] text-base text-gray-300 font-medium">
+      <p className="z-50 px-6 pb-[6vh] text-[3.8vw] text-gray-300 font-medium">
         {template?.about?.description}
       </p>
       <div className="w-full flex flex-col divide-y-2 divide-white flex-center-center z-50 bg-black bg-opacity-20 overflow-hidden px-6">

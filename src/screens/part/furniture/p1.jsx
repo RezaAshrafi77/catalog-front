@@ -5,9 +5,9 @@ import { Navbar, Button } from "~/components";
 
 export const P1 = (props) => {
   return (
-    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#c1c1c1]">
+    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#e1e1e1]">
       <Navbar
-        classNames="text-textColor bg-purple-400 bg-opacity-30 text-[#c1c1c1]"
+        classNames="text-textColor bg-purple-400 bg-opacity-30 text-[#e1e1e1]"
         leading={
           <Button
             icon={<MdChevronRight size={"2.5rem"} />}

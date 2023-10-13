@@ -18,14 +18,14 @@ export const Images = ({ template }) => {
   return routeParams?.id && template?._id ? (
     <div
       key={activeFile}
-      className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#c1c1c1]"
+      className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#e1e1e1]"
     >
       <Navbar
-        classNames="text-[#c1c1c1] pl-3"
+        classNames="text-[#e1e1e1] pl-3"
         leading={<div></div>}
         actions={[
           <Button
-            icon={<MdChevronLeft color="#c1c1c1" size={"2.5rem"} />}
+            icon={<MdChevronLeft color="#e1e1e1" size={"2.5rem"} />}
             events={{ onSubmit: () => navigation(-1) }}
           />,
         ]}

@@ -83,7 +83,6 @@ export const V1 = ({ template, loading }) => {
                 />
               ))}
             />
-            <div></div>
           </div>
           {finalSpecs?.length
             ? finalSpecs?.map((spec) => (

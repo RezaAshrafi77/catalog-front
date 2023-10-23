@@ -20,6 +20,39 @@ export const V1 = ({ template, loading }) => {
     (cat, index) => cat?.name === "مبلمان"
   )?.length;
 
+  let finalSpecs = [];
+  let editedSpecifications = part?.specifications?.length
+    ? part?.specifications?.map((item) => {
+        return { ...item, keys: [], values: [] };
+      })
+    : [];
+
+  if (editedSpecifications?.length) {
+    editedSpecifications.forEach(function (item) {
+      var existing = finalSpecs?.filter(function (v, i) {
+        return v?.tag == item?.tag;
+      });
+      if (existing.length) {
+        var existingIndex = finalSpecs.indexOf(existing[0]);
+        finalSpecs[existingIndex].keys = [
+          ...finalSpecs[existingIndex].keys,
+          finalSpecs[existingIndex].key,
+          item.key,
+        ];
+        finalSpecs[existingIndex].values = [
+          ...finalSpecs[existingIndex].values,
+          finalSpecs[existingIndex].value,
+          item.value,
+        ];
+      } else {
+        // if (typeof item.value == "string") item.value = [item.value];
+        finalSpecs.push(item);
+      }
+    });
+  }
+
+  console.log(finalSpecs);
+
   return (
     <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#e1e1e1]">
       <Navbar
@@ -52,35 +85,26 @@ export const V1 = ({ template, loading }) => {
             />
             <div></div>
           </div>
-          <div className="flex flex-col w-full px-4 mt-8">
-            <b className="font-bold text-sm mt-4 text-yellow-400 underline underline-offset-8">
-              {" "}
-              مشخصات
-            </b>
-            <ul className="flex flex-col divide-y divide-white divide-opacity-10 py-5">
-              <li className="grid grid-cols-2 gap-4">
-                <b className="font-bold text-xs py-6">نام محصول:</b>
-                <span className="font-medium text-xs py-6">{part?.title}</span>
-              </li>
-              <li className="grid grid-cols-2 gap-4">
-                <b className="font-bold text-xs py-6">توضیحات محصول:</b>
-                <span className="font-medium text-xs py-6">{part?.text}</span>
-              </li>
-              <li className="grid grid-cols-2 gap-4">
-                <b className="font-bold text-xs py-6"> دسته بندی‌ها:</b>
-                <div className="flex gap-4 flex-wrap font-medium text-xs py-5">
-                  {part?.categoryIds?.map((cat, index) => (
-                    <span
-                      key={"cat" + index}
-                      className="bg-gray-600 text-white px-2 py-1 rounded-full"
-                    >
-                      {cat?.name}
-                    </span>
-                  ))}
+          {finalSpecs?.length
+            ? finalSpecs?.map((spec) => (
+                <div className="flex flex-col w-full px-4 mt-8">
+                  <b className="font-bold text-sm mt-4 text-yellow-400 underline underline-offset-8">
+                    {spec?.tag}
+                  </b>
+                  <ul className="flex flex-col divide-y divide-white divide-opacity-10 py-5">
+                    {spec?.keys?.map((prop, index) => (
+                      <li className="grid grid-cols-2 gap-4">
+                        <b className="font-bold text-xs py-6">{prop}</b>
+                        <span className="font-medium text-xs py-6">
+                          {spec?.values[index]}
+                        </span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              </li>
-            </ul>
-          </div>
+              ))
+            : null}
+
           {isSofa && template?.price ? (
             <div className="flex flex-col w-full px-4">
               <b className="font-bold text-sm w-full underline underline-offset-8 mt-4 text-yellow-400">

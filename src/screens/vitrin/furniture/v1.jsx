@@ -54,7 +54,7 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
                       )
                     )
                     ?.map((part, index) => (
-                      <Fragment>
+                      <Fragment key={"part" + index}>
                         <Product
                           classNames="flex flex-center-center max-w-[45vw] min-w-[45vw] max-h-[45vw] min-h-[45vw]"
                           data={part}

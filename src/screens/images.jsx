@@ -2,24 +2,20 @@ import { useState } from "react";
 import { MdChevronLeft } from "react-icons/md";
 import { useNavigate, useParams } from "react-router-dom";
 
-import { Navbar, Button, Image } from "~/components";
-import { baseUrl } from "../config";
+import { Navbar, Button, Image, Carousel } from "~/components";
+import { baseUrl } from "~/config";
 import { connect } from "react-redux";
 
 export const Images = ({ template }) => {
   const navigation = useNavigate();
   const routeParams = useParams();
-  const [activeFile, setActiveFile] = useState(null);
 
   const part = template?.parts?.filter(
     (part) => part?._id === routeParams?.id
   )[0];
 
   return routeParams?.id && template?._id ? (
-    <div
-      key={activeFile}
-      className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#e1e1e1]"
-    >
+    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-black text-[#e1e1e1]">
       <Navbar
         classNames="text-[#e1e1e1] pl-3"
         leading={<div></div>}
@@ -30,29 +26,16 @@ export const Images = ({ template }) => {
           />,
         ]}
       />
-      <Image
-        key={activeFile}
-        src={
-          baseUrl +
-          "/files/" +
-          (activeFile ||
-            template?.parts?.filter((part) => part?._id === routeParams?.id)[0]
-              ?.fileIds[0]?._id)
-        }
-        classNames="w-full flex-1 object-contain h-full"
-      />
-      <div className="w-full flex justify-end ltr overflow-x-scroll py-4 border-t border-solid border-gray-600 divide-x divide-solid divide-gray-600">
-        {part?.fileIds?.map((image, index) => (
+      <Carousel
+        classNames="w-[100vw] mt-2 overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth h-[100%]"
+        render={part?.fileIds?.map((file, index) => (
           <Image
-            events={{
-              onClick: () => setActiveFile(image?._id),
-            }}
-            key={"image" + index}
-            src={baseUrl + "/files/" + image?._id}
-            classNames="object-contain w-32 h-20"
+            key={"carousel-items-" + index}
+            src={baseUrl + "/files/" + file?._id}
+            classNames="snap-align-start shrink-0 transition-all object-contain w-[100vw] flex-contain bg-black bg-opacity-10"
           />
         ))}
-      </div>
+      />
     </div>
   ) : null;
 };

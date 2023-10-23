@@ -166,10 +166,10 @@ button {
 
 .snap-mandatory::-webkit-scrollbar {
   width: 10px;
-  height: 10px;
+  height: 5px;
 }
 .snap-mandatory::-webkit-scrollbar-thumb {
-  background: rgb(239, 68, 68);
+  background: #444;
   border-radius: 10px;
 }
 .snap-mandatory::-webkit-scrollbar-track {

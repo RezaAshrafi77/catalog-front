@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { MdChevronLeft, MdRefresh } from "react-icons/md";
 import { TbMoodEmpty } from "react-icons/tb";
 import { connect } from "react-redux";
@@ -12,11 +12,11 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
   const [filterToggle, setFilterToggle] = useState(false);
 
   return (
-    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#e1e1e1]">
+    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-white">
       <Navbar
-        classNames="text-textColor bg-purple-400 bg-opacity-30 text-[#e1e1e1] pl-3"
+        classNames="text-textColor bg-purple-400 bg-opacity-30 text-white pl-3"
         leading={
-          <strong className="text-[#e1e1e1] text-lg pr-2 font-medium">
+          <strong className="text-white text-base pr-2 font-medium">
             ویترین
           </strong>
         }
@@ -33,28 +33,50 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
       />
       {template && !loading ? (
         template?.parts?.length ? (
-          <div className="h-full overflow-y-scroll no-scrollbar gap-8 pb-[10vh] pt-8">
+          <div className="h-full overflow-y-scroll no-scrollbar gap-8 pb-[10vh] pt-[6vh]">
             {template?.allPartCategories?.map((partCat, index) => (
-              <div className="flex flex-col w-full" key={"partCat" + index}>
+              <div
+                className="flex flex-col w-full mb-8"
+                key={"partCat" + index}
+              >
                 <div className="flex items-center w-full px-4">
-                  <strong className="bg-white text-sm bg-opacity-20 text-white py-1 px-3 rounded-md">
+                  <span className="w-2 h-2 animate-pulse bg-indigo-300 rounded-full"></span>
+                  <strong className="text-sm text-indigo-100 py-1 pl-3 pr-1 rounded-md">
                     {partCat?.name}
                   </strong>
-                  <span className="h-[1px] flex-1 bg-white bg-opacity-20"></span>
+                  {/* <span className="h-[1px] flex-1 bg-white bg-opacity-10"></span> */}
                 </div>
-                <div className="flex gap-4 items-center overflow-x-scroll no-scrollbar px-4 py-6">
-                  {template?.parts?.map((part, index) => (
-                    <Product
-                      classNames="max-w-[45vw] min-w-[45vw] max-h-[45vw] min-h-[45vw]"
-                      data={part}
-                      key={"vitrin-" + partCat?.name + index}
-                      style={"withTag"}
-                      events={{
-                        onClick: () =>
-                          navigation(part?._id, { state: { id: part?._id } }),
-                      }}
-                    />
-                  ))}
+                <div className="flex items-center overflow-x-scroll no-scrollbar px-4 pt-3 pb-3">
+                  {template?.parts
+                    ?.filter((part) =>
+                      part?.categoryIds?.find(
+                        (cat) => cat?.name === partCat?.name
+                      )
+                    )
+                    ?.map((part, index) => (
+                      <Fragment>
+                        <Product
+                          classNames="flex flex-center-center max-w-[45vw] min-w-[45vw] max-h-[45vw] min-h-[45vw]"
+                          data={part}
+                          key={"vitrin-" + partCat?.name + index}
+                          style={"withTag"}
+                          events={{
+                            onClick: () =>
+                              navigation(part?._id, {
+                                state: { id: part?._id },
+                              }),
+                          }}
+                        />
+                        {template?.parts?.filter((part) =>
+                          part?.categoryIds?.find(
+                            (cat) => cat?.name === partCat?.name
+                          )
+                        )?.length !==
+                        index + 1 ? (
+                          <div className="min-w-[20px] h-[1px] bg-[#ffffff33] shadow-md"></div>
+                        ) : null}
+                      </Fragment>
+                    ))}
                 </div>
               </div>
             ))}
@@ -77,7 +99,7 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
 
 const mapStateToProps = (state) => ({
   template: state.template.template,
-  loading: state.template.loading
+  loading: state.template.loading,
 });
 
 const mapDispatchToProps = {

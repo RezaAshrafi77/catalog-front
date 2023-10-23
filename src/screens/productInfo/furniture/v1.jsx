@@ -1,15 +1,16 @@
-import React from "react";
+import { useState } from "react";
 import { connect } from "react-redux";
 import { Button, Navbar, Image } from "~/components";
-import { MdCall, MdChevronLeft, MdSearch } from "react-icons/md";
+import { MdCall, MdChevronLeft, MdSearch, MdZoomIn } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { baseUrl } from "../../../config";
-import { Loading } from "../../../components";
-import { separate } from "../../../utils/funcs";
+import { baseUrl } from "~/config";
+import { Carousel, Loading } from "~/components";
+import { separate } from "~/utils/funcs";
 
 export const V1 = ({ template, loading }) => {
   const navigation = useNavigate();
   const routeParams = useParams();
+  const [activeFileIndex, setActiveFileIndex] = useState(0);
 
   const part = template?.parts?.filter(
     (part) => part?._id === routeParams?.id
@@ -37,18 +38,19 @@ export const V1 = ({ template, loading }) => {
         </div>
       ) : (
         <div className="flex flex-1 flex-col overflow-y-scroll no-scrollbar pb-40">
-          <div className="w-full relative">
-            <Image
-              src={baseUrl + "/files/" + part?.fileIds[0]?._id}
-              classNames="w-full flex-contain bg-black border-b border-[#ffffff33] bg-opacity-10"
+          <div className="w-full flex flex-center-center relative bg-black h-[80vw]">
+            <Carousel
+              classNames="w-[100vw] mt-2 overflow-x-auto snap-x snap-mandatory scroll-smooth h-[80vw]"
+              render={part?.fileIds?.map((file, index) => (
+                <Image
+                  key={"carousel-items-" + index}
+                  src={baseUrl + "/files/" + file?._id}
+                  classNames="snap-align-start shrink-0 transition-all object-contain w-[100vw] flex-contain bg-black bg-opacity-10"
+                  events={{ onClick: () => navigation("album") }}
+                />
+              ))}
             />
-            <Button
-              classNames="absolute right-5 top-4 bg-white bg-opacity-40 backdrop-filter backdrop-filter-md rounded-full p-1.5 shadow-md"
-              icon={<MdSearch size="1.5rem" color="white" />}
-              events={{
-                onSubmit: () => navigation("album"),
-              }}
-            />
+            <div></div>
           </div>
           <div className="flex flex-col w-full px-4 mt-8">
             <b className="font-bold text-sm mt-4 text-yellow-400 underline underline-offset-8">
@@ -79,7 +81,7 @@ export const V1 = ({ template, loading }) => {
               </li>
             </ul>
           </div>
-          {(isSofa && template?.price) ? (
+          {isSofa && template?.price ? (
             <div className="flex flex-col w-full px-4">
               <b className="font-bold text-sm w-full underline underline-offset-8 mt-4 text-yellow-400">
                 قیمت هر بخش

@@ -5,10 +5,10 @@ import { connect } from "react-redux";
 
 import { Image, Navbar, Button, Drawer, Input } from "~/components";
 import { baseUrl } from "../config";
+import { separate } from "../utils/funcs";
 
 export const Home = ({ template, ...props }) => {
   const navigation = useNavigate();
-  const [menuToggle, setMenuToggle] = useState(false);
 
   const routes = [
     {

@@ -59,7 +59,9 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
                           classNames="flex flex-center-center max-w-[45vw] min-w-[45vw] max-h-[45vw] min-h-[45vw]"
                           data={part}
                           key={"vitrin-" + partCat?.name + index}
+                          index={index}
                           style={"withTag"}
+                          tag={part?.title}
                           events={{
                             onClick: () =>
                               navigation(part?._id, {

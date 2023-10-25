@@ -14,11 +14,11 @@ export default function Square({ data, events, classNames, ...props }) {
         src={baseUrl + "/files/" + data?.fileIds[0]?._id}
         classNames={`min-w-full min-h-full h-full object-contain`}
       />
-      {/* {data?.categoryIds?.length ? (
-        <span className="text-xs absolute right-3 bottom-4 px-3 py-0.5 rounded-full backdrop-blur-lg bg-white font-medium text-black">
-          {data?.categoryIds[0]?.name}
+      {props?.tag ? (
+        <span className="text-xs absolute right-3 bottom-4 px-3 py-0.5 rounded-full backdrop-blur-lg bg-white bg-opacity-30 font-medium text-white">
+          {"مدل" + " " + (props?.index + 1)}
         </span>
-      ) : null} */}
+      ) : null}
     </div>
   );
 }

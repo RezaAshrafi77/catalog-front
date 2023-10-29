@@ -80,13 +80,13 @@ export const Router = ({ getTemplateApi, template }) => {
                 <Route
                   path="/:id/vitrin"
                   element={
-                    <Vitrin position={template?.position || "furniture"} />
+                    <Vitrin position={template?.position || "food"} />
                   }
                 />
                 <Route
                   path="/:id/vitrin/:id"
                   element={
-                    <ProductInfo position={template?.position || "furniture"} />
+                    <ProductInfo position={template?.position || "food"} />
                   }
                 />
                 <Route path="/:id/vitrin/:id/album" element={<Images />} />

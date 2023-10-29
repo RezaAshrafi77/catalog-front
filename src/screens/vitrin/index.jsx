@@ -1,11 +1,11 @@
 import React from "react";
 
-import { Furniture, Appliance } from "./index";
+import { Furniture, Appliance, Food } from "./index";
 
 export default function Vitrin({ position = "furniture" }) {
   const positions = {
     appliance: <Appliance />,
-    // food: <Food />,
+    food: <Food />,
     furniture: <Furniture />,
     // mobile: <Mobile />,
     // wear: <Wear />,

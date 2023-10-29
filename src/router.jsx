@@ -15,6 +15,7 @@ import {
   DimentionGuide,
   ProductInfo,
   Images,
+  Templates,
 } from "./screens";
 import { checkDevice } from "./utils/funcs";
 import { template } from "./redux/actions";
@@ -28,7 +29,7 @@ export const Router = ({ getTemplateApi, template }) => {
 
   useEffect(() => {
     // get data
-    if (!template) {
+    if (!template && window.location.pathname.split("/")[1]) {
       getTemplateApi({ id: window.location.pathname.split("/")[1] });
     }
     let vh = window.innerHeight * 0.01;
@@ -74,14 +75,16 @@ export const Router = ({ getTemplateApi, template }) => {
             {device === "mobile" ? (
               <>
                 <Route
+                  path=""
+                  element={<Templates />}
+                />
+                <Route
                   path="/:id"
                   element={homeIsReady ? <Home /> : <Splash />}
                 />
                 <Route
                   path="/:id/vitrin"
-                  element={
-                    <Vitrin position={template?.position || "food"} />
-                  }
+                  element={<Vitrin position={template?.position || "food"} />}
                 />
                 <Route
                   path="/:id/vitrin/:id"

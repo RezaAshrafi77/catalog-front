@@ -1,13 +1,12 @@
 import { useState, useEffect } from "react";
-import { MdClose, MdSearch, MdMenu, MdChevronLeft } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { Image, Navbar, Button, Drawer, Input } from "~/components";
 import { baseUrl } from "../config";
-import { separate } from "../utils/funcs";
+import { template } from "../redux/actions";
 
-export const Home = ({ template, ...props }) => {
+export const Home = ({ getTemplateApi, template, ...props }) => {
   const navigation = useNavigate();
 
   const routes = [
@@ -24,6 +23,12 @@ export const Home = ({ template, ...props }) => {
       },
     },
   ];
+
+  useEffect(() => {
+    if (template?._id !== window.location.pathname.split("/")[1]) {
+      getTemplateApi({ id: window.location.pathname.split("/")[1] });
+    }
+  }, []);
 
   return (
     <div className="flex flex-1 flex-col justify-end max-w-full max-h-full h-full overflow-hidden">
@@ -69,6 +74,8 @@ const mapStateToProps = (state) => ({
   template: state.template.template,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getTemplateApi: template.getTemplate,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

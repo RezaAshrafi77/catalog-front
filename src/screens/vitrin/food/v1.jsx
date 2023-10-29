@@ -18,7 +18,7 @@ import {
   Drawer,
   Navbar,
 } from "~/components";
-import { categoriesData, parts } from "~/shared/data";
+
 
 const V1 = ({ template }) => {
   const [searchMode, setSearchMode] = useState(false);
@@ -34,10 +34,10 @@ const V1 = ({ template }) => {
   const calcScrollOptions = () => {
     let count = 0;
     let scrollPoints = [];
-    if (parts?.length && categoriesData?.length) {
-      for (let cat of categoriesData) {
-        for (let part of parts) {
-          if (cat === part?.categoryId) {
+    if (template) {
+      for (let cat of template?.allPartCategories) {
+        for (let part of template?.parts) {
+          if (cat?._id === part?._id) {
             count = count + 1;
           }
         }
@@ -266,7 +266,7 @@ const V1 = ({ template }) => {
         </>
       )}
       <ListView
-        classNames={`!bg-[#363636] h-full ${onScrolling || searchMode ? "pt-28" : ""}`}
+        classNames={`!bg-[#363636] ${onScrolling || searchMode ? "pt-28" : ""}`}
         type="simple"
         orientation="vertical"
         render={template?.parts

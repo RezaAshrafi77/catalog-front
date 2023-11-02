@@ -1,12 +1,18 @@
 import { MdChevronLeft, MdOutlineLocationOn } from "react-icons/md";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { TbPhoneCall, TbBrandInstagram, TbInfoCircle, TbBrandTelegram } from "react-icons/tb";
+import {
+  TbPhoneCall,
+  TbBrandInstagram,
+  TbInfoCircle,
+  TbBrandTelegram,
+} from "react-icons/tb";
 import { Navbar, Button, Image } from "~/components";
 import { baseUrl } from "../config";
 
 export const About = ({ template }) => {
   const navigation = useNavigate();
+  const location = template?.about?.location?.split(",");
   return (
     <div className="flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden">
       <Navbar
@@ -76,11 +82,11 @@ export const About = ({ template }) => {
         </ul>
         {template?.about?.location ? (
           <a
-            href="https://www.google.com/maps/@35.81,50.82,20z,"
+            href={`https://neshan.org/maps/@${location[0]},${location[1]},15.0z,0.0p/search/${location[0]},${location[1]}`}
             target="_blank"
           >
             <Image
-              src="https://api.neshan.org/v2/static?key=service.JK66CWU8gRCNgGhWAEuTM82fanbBPxBJgpfrp1Lk&type=standard-day&zoom=16&center=35.81,50.82&width=100&height=100&marker=red"
+              src={`https://api.neshan.org/v2/static?key=service.JK66CWU8gRCNgGhWAEuTM82fanbBPxBJgpfrp1Lk&type=standard-day&zoom=16&center=${location[0]},${location[1]}&width=100&height=100&marker=red`}
               classNames={"w-full h-[80vw] rounded-3xl"}
             />
           </a>

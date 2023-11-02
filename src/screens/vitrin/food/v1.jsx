@@ -19,7 +19,6 @@ import {
   Navbar,
 } from "~/components";
 
-
 const V1 = ({ template }) => {
   const [searchMode, setSearchMode] = useState(false);
   const [catActiveIndex, setCatActiveIndex] = useState(0);
@@ -37,7 +36,7 @@ const V1 = ({ template }) => {
     if (template) {
       for (let cat of template?.allPartCategories) {
         for (let part of template?.parts) {
-          if (cat?._id === part?._id) {
+          if (cat?._id === part?.categoryIds[0]?._id) {
             count = count + 1;
           }
         }
@@ -270,6 +269,10 @@ const V1 = ({ template }) => {
         type="simple"
         orientation="vertical"
         render={template?.parts
+          ?.sort(
+            (part1, part2) =>
+              part1?.categoryIds[0]?.name - part2?.categoryIds[0]?.name
+          )
           ?.filter((part) => part?.title?.includes(searchValue))
           ?.map((part, index) => (
             <Food

@@ -8,11 +8,13 @@ export const Templates = ({}) => {
   const navigation = useNavigate();
 
   return (
-    <div className="relative flex flex-1 flex-col py-10 px-4 gap-4 max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-white">
-      <h1 className="text-xl mb-4 text-yellow-400 underline underline-offset-8">نمونه کارها</h1>
+    <div className="relative flex flex-1 ltr flex-col py-10 px-4 gap-4 max-w-full max-h-full h-full overflow-y-scroll overflow-x-hidden bg-purple-400 bg-opacity-10 text-white">
+      <h1 className="text-xl text-left w-fit mb-4 bg-indigo-300 bg-opacity-20 rounded-md pl-1">
+        Welcome to <span className="bg-red-600 px-1">Catalog</span>
+      </h1>
       {templatesData?.map((template, index) => (
         <div
-          className="flex flex-center-center w-full h-[300px] relative overflow-hidden"
+          className="flex flex-center-center w-full h-[50vh] relative overflow-hidden"
           key={template + index}
           onClick={() => navigation("/" + template?.id)}
         >

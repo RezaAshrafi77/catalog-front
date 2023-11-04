@@ -6,7 +6,7 @@ import { template } from "../redux/actions";
 
 export const Splash = ({ getTemplateApi }) => {
   useEffect(() => {
-    getTemplateApi({ id: window.location.pathname.split("/")[1] });
+    getTemplateApi({ id: window.location.pathname.split("/")[2] });
   }, []);
 
   return (

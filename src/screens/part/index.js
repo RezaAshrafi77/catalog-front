@@ -1,1 +1,0 @@
-export {default as Furniture} from "./furniture";

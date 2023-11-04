@@ -8,7 +8,7 @@ import {
   TbBrandTelegram,
 } from "react-icons/tb";
 import { Navbar, Button, Image } from "~/components";
-import { baseUrl } from "../config";
+import { baseUrl } from "~/config";
 
 export const About = ({ template }) => {
   const navigation = useNavigate();

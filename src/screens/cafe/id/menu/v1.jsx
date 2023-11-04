@@ -18,6 +18,7 @@ import {
   Drawer,
   Navbar,
 } from "~/components";
+import { baseUrl } from "~/config";
 
 const V1 = ({ template }) => {
   const [searchMode, setSearchMode] = useState(false);
@@ -25,7 +26,10 @@ const V1 = ({ template }) => {
   const [searchValue, setSearchValue] = useState("");
   const [onScrolling, setOnScrolling] = useState(false);
   const [notesToggle, setNotesToggle] = useState(false);
+  const [infoToggle, setInfoToggle] = useState(false);
   const [catThresolds, setCatThresholds] = useState([]);
+  const [notesCount, setNotesCount] = useState({});
+  const [activePart, setActivePart] = useState(null);
   const menuRef = useRef(null);
   const inputRef = useRef(null);
   const navigation = useNavigate();
@@ -69,6 +73,20 @@ const V1 = ({ template }) => {
     }
     if (menuRef?.current?.scrollTop < catThresolds[catActiveIndex - 1] - 200) {
       setCatActiveIndex(catActiveIndex - 1);
+    }
+  };
+
+  const notesHandler = (type, data) => {
+    if (type === "add") {
+      setNotesCount({
+        ...notesCount,
+        [data?._id]: notesCount[data?._id] ? notesCount[data?._id] + 1 : 1,
+      });
+    } else {
+      setNotesCount({
+        ...notesCount,
+        [data]: notesCount[data] !== 0 ? notesCount[data] - 1 : 0,
+      });
     }
   };
 
@@ -139,7 +157,7 @@ const V1 = ({ template }) => {
           onClose: () => setNotesToggle(false),
         }}
       >
-        <div className="flex-1 flex flex-col justify-between bg-white text-[#282828] rounded-r-2xl px-[6vw] py-[6vh]">
+        <div className="flex-1 flex flex-col justify-between bg-white text-[#282828] rounded-r-2xl px-4 py-6">
           <div className="flex flex-col flex-1 w-full items-center">
             <header className="flex  justify-between w-full">
               <Button
@@ -148,9 +166,64 @@ const V1 = ({ template }) => {
                 classNames="ml-4"
               />
             </header>
-            <b className="text-lg font-bold mt-6">یادداشت سفارش</b>
+            <b className="text-lg font-medium mt-6">لیست سفارش</b>
+            <div className="flex-1 flex flex-col gap-4 w-full my-4 py-6">
+              {Object.keys(notesCount)?.map((id, index) =>
+                notesCount[id] ? (
+                  <div
+                    className="flex w-full items-center justify-between"
+                    key={"note-item" + index}
+                  >
+                    <div className="flex items-center gap-4">
+                      <Image
+                        src={
+                          template?.parts?.filter((part) => part?._id === id)[0]
+                            ?.fileIds[0]?._id
+                            ? baseUrl +
+                              "/files/" +
+                              template?.parts?.filter(
+                                (part) => part?._id === id
+                              )[0]?.fileIds[0]?._id
+                            : null
+                        }
+                        classNames="bg-white z-10 w-[16vw] h-[16vw] rounded-xl border border-black"
+                      />
+                      <strong className="text-sm font-medium">
+                        {
+                          template?.parts?.filter((part) => part?._id === id)[0]
+                            ?.title
+                        }
+                      </strong>
+                    </div>
+                    <div className="flex w-[18vw] items-center justify-between">
+                      <Button
+                        title="+"
+                        classNames="border border-solid border-red-500 text-red-500 !w-6 !h-6 text-sm font-medium !border-[1px]"
+                        events={{
+                          onSubmit: () =>
+                            notesHandler(
+                              "addToNotes",
+                              template?.parts?.filter(
+                                (part) => part?._id === id
+                              )
+                            )[0],
+                        }}
+                      />
+                      <span className="text-lg">{notesCount[id]}</span>
+                      <Button
+                        title="-"
+                        classNames="border border-solid border-red-500 text-red-500 !w-6 !h-6 text-sm font-medium !border-[1px]"
+                        events={{
+                          onSubmit: () => notesHandler("removeFromNotes", id),
+                        }}
+                      />
+                    </div>
+                  </div>
+                ) : null
+              )}
+            </div>
           </div>
-          <p className="text-center text-lg font-normal">
+          <p className="text-center text-base font-normal">
             برای پرداخت ، مبلغ نهایی را از رستوران دریافت کنید
           </p>
         </div>
@@ -278,8 +351,16 @@ const V1 = ({ template }) => {
             <Food
               index={1}
               data={part}
+              notesCount={notesCount[part?._id] ? notesCount[part?._id] : 0}
               key={"part" + index}
-              events={{ onClick: () => {} }}
+              events={{
+                addToNotes: () => notesHandler("add", part),
+                removeFromNotes: () => notesHandler("remove", part?._id),
+                onClick: () => {
+                  setInfoToggle(true);
+                  setActivePart(part);
+                },
+              }}
             />
           ))}
       />
@@ -296,6 +377,55 @@ const V1 = ({ template }) => {
           }}
         />
       ) : null}
+      <Drawer
+        open={infoToggle}
+        direction="bottom"
+        size="40%"
+        events={{
+          onClose: () => setInfoToggle(false),
+        }}
+      >
+        <div className="w-full h-full bg-[#282828] text-white rounded-t-3xl overflow-hidden">
+          <Image
+            src={
+              activePart?.fileIds[0]?._id
+                ? baseUrl + "/files/" + activePart?.fileIds[0]?._id
+                : null
+            }
+            classNames="w-full h-[80%]"
+          />
+          <div className="flex justify-between items-center h-[20%] px-4">
+            <strong className="text-xl font-medium">{activePart?.title}</strong>
+            {notesCount[activePart?._id] ? (
+              <div className="flex w-[30vw] items-center justify-between">
+                <Button
+                  title="+"
+                  classNames="border border-solid border-red-500 text-red-500 !w-8 !h-8 text-xl font-medium !border-[1px]"
+                  events={{
+                    onSubmit: () => notesHandler("add", activePart),
+                  }}
+                />
+                <span className="text-3xl">{notesCount[activePart?._id]}</span>
+                <Button
+                  title="-"
+                  classNames="border border-solid border-red-500 text-red-500 !w-8 !h-8 text-xl font-medium !border-[1px]"
+                  events={{
+                    onSubmit: () => notesHandler("remove", activePart?._id),
+                  }}
+                />
+              </div>
+            ) : (
+              <Button
+                title="افزودن"
+                classNames="border border-solid border-red-500 text-red-500 !w-[25vw] !h-10 text-base font-medium !border-[1px]"
+                events={{
+                  onSubmit: () => notesHandler("add", activePart),
+                }}
+              />
+            )}
+          </div>
+        </div>
+      </Drawer>
     </div>
   );
 };

@@ -1,15 +1,22 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import { Button, Navbar, Image } from "~/components";
-import { MdCall, MdChevronLeft, MdSearch, MdZoomIn } from "react-icons/md";
+import { MdCall, MdChevronLeft } from "react-icons/md";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "~/config";
 import { Carousel, Loading } from "~/components";
 import { separate } from "~/utils/funcs";
+import { template } from "../../../../redux/actions";
 
-export const V1 = ({ template, loading }) => {
+export const V1 = ({ template, getTemplateApi, loading }) => {
   const navigation = useNavigate();
   const routeParams = useParams();
+
+  useEffect(() => {
+    if (template?._id !== window.location.pathname.split("/")[2]) {
+      getTemplateApi({ id: window.location.pathname.split("/")[2] });
+    }
+  }, []);
 
   const part = template?.parts?.filter(
     (part) => part?._id === routeParams?.id
@@ -166,6 +173,8 @@ const mapStateToProps = (state) => ({
   loading: state.template.loading,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  getTemplateApi: template.getTemplate,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(V1);

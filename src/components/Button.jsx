@@ -32,7 +32,10 @@ export default function Button({ events, data, classNames, ...props }) {
 
   return (
     <button
-      onClick={(e) => events["onSubmit"](e)}
+      onClick={(e) => {
+        e.stopPropagation();
+        events["onSubmit"](e);
+      }}
       className={classNames + " " + className}
       style={buttonStyle}
       key={props?.key}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -7,31 +7,32 @@ import { connect } from "react-redux";
 
 //components
 import {
-  Home,
-  Vitrin,
   Splash,
-  About,
   NotFound,
   DimentionGuide,
-  ProductInfo,
-  Images,
-  Templates,
+  CafeIntro,
+  FurnitureIntro,
+  ProjectsIntro,
+  CafeHome,
+  CafeMenu,
+  CafeAbout,
+  FurnitureHome,
+  FurnitureVitrin,
+  FurnitureAbout,
+  FurnitureProductInfo,
+  FurnitureImages,
 } from "./screens";
 import { checkDevice } from "./utils/funcs";
-import { template } from "./redux/actions";
 // import { MenuFullLayer } from "~/components";
 
 let splashInterval;
-export const Router = ({ getTemplateApi, template }) => {
-  const [splashDuration, setSplashDuration] = useState(3);
+export const Router = ({ template }) => {
+  const [splashDuration, setSplashDuration] = useState(2);
   const [homeIsReady, setHomeIsReady] = useState(false);
   const [device, setDevice] = useState("mobile");
 
   useEffect(() => {
     // get data
-    if (!template && window.location.pathname.split("/")[1]) {
-      getTemplateApi({ id: window.location.pathname.split("/")[1] });
-    }
     let vh = window.innerHeight * 0.01;
     // Then we set the value in the --vh custom property to the root of the document
     document.documentElement.style.setProperty("--vh", `${vh}px`);
@@ -74,26 +75,37 @@ export const Router = ({ getTemplateApi, template }) => {
           <Routes>
             {device === "mobile" ? (
               <>
+                <Route path="" element={<ProjectsIntro />} />
+                <Route path="projects" element={<ProjectsIntro />} />
+                <Route path="cafe" element={<CafeIntro />} />
                 <Route
-                  path=""
-                  element={<Templates />}
+                  path="cafe/:id"
+                  element={!homeIsReady ? <Splash /> : <CafeHome />}
+                />
+                <Route path="cafe/:id/menu" element={<CafeMenu />} />
+                <Route path="cafe/:id/about-us" element={<CafeAbout />} />
+                <Route path="furniture" element={<FurnitureIntro />} />
+                <Route
+                  path="furniture/:id"
+                  element={!homeIsReady ? <Splash /> : <FurnitureHome />}
                 />
                 <Route
-                  path="/:id"
-                  element={homeIsReady ? <Home /> : <Splash />}
+                  path="furniture/:id/vitrin"
+                  element={<FurnitureVitrin />}
                 />
                 <Route
-                  path="/:id/vitrin"
-                  element={<Vitrin position={template?.name?.includes('مبل') ? "furniture" : "food"} />}
+                  path="furniture/:id/about-us"
+                  element={<FurnitureAbout />}
                 />
                 <Route
-                  path="/:id/vitrin/:id"
-                  element={
-                    <ProductInfo position={template?.name?.includes('مبل') ? "furniture" : "food"} />
-                  }
+                  path="furniture/:id/vitrin/:id"
+                  element={<FurnitureProductInfo />}
                 />
-                <Route path="/:id/vitrin/:id/album" element={<Images />} />
-                <Route path="/:id/about-us" element={<About />} />
+                <Route
+                  path="furniture/:id/vitrin/:id/album"
+                  element={<FurnitureImages />}
+                />
+
                 <Route path="*" element={<NotFound />} />
               </>
             ) : (
@@ -110,8 +122,4 @@ const mapStateToProps = (state) => ({
   template: state.template.template,
 });
 
-const mapDispatchToProps = {
-  getTemplateApi: template.getTemplate,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Router);
+export default connect(mapStateToProps)(Router);

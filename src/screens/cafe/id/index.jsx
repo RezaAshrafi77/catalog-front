@@ -2,18 +2,17 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { connect } from "react-redux";
 
-import { Image, Navbar, Button, Drawer, Input } from "~/components";
-import { baseUrl } from "../config";
-import { template } from "../redux/actions";
+import { Image, Navbar, Button } from "~/components";
+import { baseUrl } from "~/config";
+import { template } from "~/redux/actions";
 
-export const Home = ({ getTemplateApi, template, ...props }) => {
+export const CafeHome = ({ getTemplateApi, template, ...props }) => {
   const navigation = useNavigate();
-
   const routes = [
     {
       title: template?.ui?.buttonOfVitrine,
       action: () => {
-        navigation("vitrin");
+        navigation("menu");
       },
     },
     {
@@ -25,8 +24,8 @@ export const Home = ({ getTemplateApi, template, ...props }) => {
   ];
 
   useEffect(() => {
-    if (template?._id !== window.location.pathname.split("/")[1]) {
-      getTemplateApi({ id: window.location.pathname.split("/")[1] });
+    if (template?._id !== window.location.pathname.split("/")[2]) {
+      getTemplateApi({ id: window.location.pathname.split("/")[2] });
     }
   }, []);
 
@@ -78,4 +77,4 @@ const mapDispatchToProps = {
   getTemplateApi: template.getTemplate,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default connect(mapStateToProps, mapDispatchToProps)(CafeHome);

@@ -1,15 +1,20 @@
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { MdChevronLeft, MdRefresh } from "react-icons/md";
 import { TbMoodEmpty } from "react-icons/tb";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { Navbar, Button, Product, Loading, Failed } from "~/components";
-import { template } from "../../../redux/actions";
+import { template } from "~/redux/actions";
 
 export const V1 = ({ template, getTemplateApi, loading }) => {
   const navigation = useNavigate();
-  const [filterToggle, setFilterToggle] = useState(false);
+
+  useEffect(() => {
+    if (template?._id !== window.location.pathname.split("/")[2]) {
+      getTemplateApi({ id: window.location.pathname.split("/")[2] });
+    }
+  }, []);
 
   return (
     <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-white">

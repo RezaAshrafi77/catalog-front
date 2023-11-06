@@ -1,6 +1,5 @@
 import { Fragment, useState, useEffect } from "react";
-import { MdChevronLeft, MdRefresh } from "react-icons/md";
-import { TbMoodEmpty } from "react-icons/tb";
+import { IoChevronBack, IoMenu } from "react-icons/io5";
 import { connect } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
@@ -9,6 +8,9 @@ import { template } from "~/redux/actions";
 
 export const V1 = ({ template, getTemplateApi, loading }) => {
   const navigation = useNavigate();
+  const [catActiveIndex, setCatActiveIndex] = useState(0);
+  const [catLoading, setCatLoading] = useState(false);
+  const [scrollToggle, setScrollToggle] = useState(false);
 
   useEffect(() => {
     if (template?._id !== window.location.pathname.split("/")[2]) {
@@ -16,90 +18,94 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
     }
   }, []);
 
+  useEffect(() => {
+    setCatLoading(true);
+    setTimeout(() => {
+      setCatLoading(false);
+    }, 1000);
+  }, [catActiveIndex]);
+
   return (
-    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-white">
+    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-white text-black pt-4 select-none">
       <Navbar
-        classNames="text-textColor bg-purple-400 bg-opacity-30 text-white pl-3"
+        classNames="text-textColor text-black px-4"
         leading={
-          <strong className="text-white text-base pr-2 font-medium">
-            ویترین
-          </strong>
+          <Button
+            icon={<IoMenu size={"2rem"} />}
+            events={{ onSubmit: () => {} }}
+            classNames="text-gray-900"
+          />
         }
         actions={[
           <Button
-            icon={<MdRefresh color="#e1e1e1" size={"1.9rem"} />}
-            events={{ onSubmit: () => getTemplateApi({ id: template?._id }) }}
-          />,
-          <Button
-            icon={<MdChevronLeft color="#e1e1e1" size={"2.5rem"} />}
+            icon={<IoChevronBack size={"1.75rem"} />}
             events={{ onSubmit: () => navigation(-1) }}
+            classNames="text-gray-900"
           />,
         ]}
       />
-      {template && !loading ? (
-        template?.parts?.length ? (
-          <div className="h-full overflow-y-scroll no-scrollbar gap-8 pb-[10vh] pt-[6vh]">
-            {template?.allPartCategories?.map((partCat, index) => (
-              <div
-                className="flex flex-col w-full mb-8"
-                key={"partCat" + index}
-              >
-                <div className="flex items-center w-full px-4">
-                  <span className="w-2 h-2 animate-pulse bg-indigo-300 rounded-full"></span>
-                  <strong className="text-sm text-indigo-100 py-1 pl-3 pr-1 rounded-md">
-                    {partCat?.name}
-                  </strong>
-                  {/* <span className="h-[1px] flex-1 bg-white bg-opacity-10"></span> */}
-                </div>
-                <div className="flex items-center overflow-x-scroll no-scrollbar px-4 pt-3 pb-3">
-                  {template?.parts
-                    ?.filter((part) =>
-                      part?.categoryIds?.find(
-                        (cat) => cat?.name === partCat?.name
-                      )
-                    )
-                    ?.map((part, index) => (
-                      <Fragment key={"part" + index}>
-                        <Product
-                          classNames="flex flex-center-center max-w-[45vw] min-w-[45vw] max-h-[45vw] min-h-[45vw]"
-                          data={part}
-                          key={"vitrin-" + partCat?.name + index}
-                          index={index}
-                          style={"withTag"}
-                          tag={part?.title}
-                          events={{
-                            onClick: () =>
-                              navigation(part?._id, {
-                                state: { id: part?._id },
-                              }),
-                          }}
-                        />
-                        {template?.parts?.filter((part) =>
-                          part?.categoryIds?.find(
-                            (cat) => cat?.name === partCat?.name
-                          )
-                        )?.length !==
-                        index + 1 ? (
-                          <div className="min-w-[20px] h-[1px] bg-[#ffffff33] shadow-md"></div>
-                        ) : null}
-                      </Fragment>
-                    ))}
-                </div>
-              </div>
-            ))}
+
+      <header className="pt-6 pb-2 gap-4 w-full flex flex-col">
+        {!scrollToggle ? (
+          <div className="flex flex-col gap-1 px-5">
+            <span className="font-normal text-sm">سلام!</span>
+            <p className="font-medium text-base">
+              دنبال چه محصولی برای خرید هستی؟
+            </p>
           </div>
-        ) : (
-          <Failed
-            icon={<TbMoodEmpty size="40vw" color="yellow" />}
-            subtitle="هیچ محصولی یافت نشد."
-            classNames="gap-6"
-          />
-        )
-      ) : (
-        <div className="flex-1 flex-center-center">
-          <Loading />
+        ) : null}
+        <ul className="flex w-full px-5 pb-3 overflow-x-scroll no-scrollbar">
+          {template?.allPartCategories?.map((item, index) => (
+            <Button
+              classNames={`${
+                catActiveIndex === index
+                  ? "bg-[#028779] text-white border-2 border-solid border-[#028779]"
+                  : "border-2 border-solid border-[#028779] text-[#028779]"
+              } font-medium text-sm ml-2 outline-none min-w-fit px-4 !rounded-full !py-1 !max-h-[30px]`}
+              title={item?.name}
+              key={index}
+              events={{
+                onSubmit: () => {
+                  setCatActiveIndex(index);
+                },
+              }}
+            />
+          ))}
+        </ul>
+      </header>
+      {template && !catLoading ? (
+        <div
+          className="flex-1 overflow-y-scroll flex flex-col px-5 pt-4 gap-8 bg-white drop-shadow-lg ltr pb-[30vh]"
+          onScroll={(e) => {
+            if (e.target.scrollTop === 0) {
+              setScrollToggle(false);
+            } else {
+              setScrollToggle(true);
+            }
+          }}
+        >
+          {template?.parts
+            ?.filter(
+              (part) =>
+                part?.categoryIds[0]?._id ===
+                template?.allPartCategories[catActiveIndex]?._id
+            )
+            ?.map((part) => (
+              <Product
+                style="sofa"
+                data={part}
+                events={{
+                  onClick: () => navigation(part?._id),
+                }}
+              />
+            ))}
         </div>
-      )}
+      ) : null}
+      {loading || catLoading ? (
+        <div className="flex-1 flex-center-center">
+          <Loading type="dot-pulse" />
+        </div>
+      ) : null}
     </div>
   );
 };

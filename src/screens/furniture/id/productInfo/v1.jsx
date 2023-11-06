@@ -7,6 +7,7 @@ import { baseUrl } from "~/config";
 import { Carousel, Loading } from "~/components";
 import { separate } from "~/utils/funcs";
 import { template } from "../../../../redux/actions";
+import { IoChevronForward, IoHeartOutline } from "react-icons/io5";
 
 export const V1 = ({ template, getTemplateApi, loading }) => {
   const navigation = useNavigate();
@@ -59,14 +60,21 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
   }
 
   return (
-    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-purple-400 bg-opacity-10 text-[#e1e1e1]">
+    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-white text-black pt-4">
       <Navbar
-        classNames="text-textColor bg-purple-400 bg-opacity-30 text-[#e1e1e1] pl-3"
-        leading={<div></div>}
+        classNames="text-textColor px-4"
+        leading={
+          <Button
+            icon={<IoChevronForward size={"1.75rem"} />}
+            events={{ onSubmit: () => navigation(-1) }}
+            classNames="text-gray-900"
+          />
+        }
         actions={[
           <Button
-            icon={<MdChevronLeft size="2.5rem" color="#e1e1e1" />}
-            events={{ onSubmit: () => navigation(-1) }}
+            icon={<IoHeartOutline size="2rem" color="" />}
+            events={{ onSubmit: () => {} }}
+            classNames="text-red-500"
           />,
         ]}
       />
@@ -76,24 +84,20 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
         </div>
       ) : (
         <div className="flex flex-1 flex-col overflow-y-scroll no-scrollbar pb-40">
-          <div className="w-full flex flex-center-center relative bg-black h-[80vw] mb-8">
-            <Carousel
-              classNames="w-[100vw] mt-2 overflow-x-auto snap-x snap-mandatory scroll-smooth h-[80vw]"
-              render={part?.fileIds?.map((file, index) => (
-                <Image
-                  key={"carousel-items-" + index}
-                  src={baseUrl + "/files/" + file?._id}
-                  classNames="snap-align-start shrink-0 transition-all object-contain w-[100vw] flex-contain bg-black bg-opacity-10"
-                  events={{ onClick: () => navigation("album") }}
-                />
-              ))}
+          <div className="w-full flex flex-center-center relative bg-white h-[80vw] mb-8">
+            <Image
+              src={baseUrl + "/files/" + part?.fileIds[0]?._id}
+              classNames="snap-align-start shrink-0 transition-all object-contain w-[100vw] h-[80vw] flex-contain bg-black bg-opacity-5"
+              events={{ onClick: () => navigation("album") }}
             />
           </div>
           <div className="flex flex-col px-4 gap-4 pb-8 text-indigo-200">
-            <strong className="text-lg font-bold">{part?.title}</strong>
+            <strong className="text-lg font-bold text-gray-700">
+              {part?.title}
+            </strong>
             {part?.text ? (
               <>
-                <b className="font-bold text-sm mt-4 text-yellow-400 underline underline-offset-8">
+                <b className="font-bold text-sm mt-4 text-[#028779] underline underline-offset-8">
                   توضیحات محصول
                 </b>
                 <p className="text-xs font-medium leading-9">{part?.text}</p>
@@ -102,17 +106,17 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
           </div>
           {finalSpecs?.length
             ? finalSpecs?.map((spec) => (
-                <div className="flex flex-col w-full px-4">
-                  <b className="font-bold text-sm mt-4 text-yellow-400 underline underline-offset-8">
+                <div className="flex flex-col w-full">
+                  <b className="font-bold text-sm mt-4 px-4 text-[#028779] underline underline-offset-8">
                     {spec?.tag}
                   </b>
-                  <ul className="flex flex-col divide-y divide-white divide-opacity-10 py-4">
+                  <ul className="flex flex-col divide-y divide-gray-400 divide-opacity-10 py-4">
                     {spec?.keys?.map((prop, index) => (
-                      <li className="grid grid-cols-2 gap-4">
-                        <b className="font-bold text-xs py-6 text-indigo-200">
+                      <li className="grid grid-cols-2 gap-4 px-4">
+                        <b className="font-bold text-xs py-6 text-gray-700">
                           {prop}
                         </b>
-                        <span className="font-medium text-xs py-6">
+                        <span className="font-medium text-sm py-6">
                           {spec?.tag === "قیمت" || prop === "قیمت"
                             ? separate(spec?.values[index])
                             : spec?.values[index]}

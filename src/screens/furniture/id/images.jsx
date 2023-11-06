@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Navbar, Button, Image, Carousel } from "~/components";
 import { baseUrl } from "~/config";
 import { connect } from "react-redux";
+import { IoChevronBack, IoCloseOutline, IoExitOutline } from "react-icons/io5";
 
 export const Images = ({ template }) => {
   const navigation = useNavigate();
@@ -15,14 +16,15 @@ export const Images = ({ template }) => {
   )[0];
 
   return routeParams?.id && template?._id ? (
-    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-black text-[#e1e1e1]">
+    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-white">
       <Navbar
-        classNames="text-[#e1e1e1] pl-3"
+        classNames="text-[#e1e1e1] px-4"
         leading={<div></div>}
         actions={[
           <Button
-            icon={<MdChevronLeft color="#e1e1e1" size={"2.5rem"} />}
+            icon={<IoCloseOutline color="" size={"2.5rem"} />}
             events={{ onSubmit: () => navigation(-1) }}
+            classNames="text-gray-900"
           />,
         ]}
       />
@@ -32,7 +34,7 @@ export const Images = ({ template }) => {
           <Image
             key={"carousel-items-" + index}
             src={baseUrl + "/files/" + file?._id}
-            classNames="snap-align-start shrink-0 transition-all object-contain w-[100vw] flex-contain bg-black bg-opacity-10"
+            classNames="snap-align-start shrink-0 transition-all object-contain w-[100vw] flex-contain"
           />
         ))}
       />

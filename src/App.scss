@@ -1,6 +1,6 @@
 @use "three-dots" with (
-  $dot-color: rgb(239, 68, 68),
-  $dot-bg-color: rgb(239, 68, 68)
+  $dot-color: #028779,
+  $dot-bg-color: #028779
 );
 
 @tailwind base;

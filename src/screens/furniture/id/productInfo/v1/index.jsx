@@ -6,12 +6,14 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { baseUrl } from "~/config";
 import { Carousel, Loading } from "~/components";
 import { separate } from "~/utils/funcs";
-import { template } from "../../../../redux/actions";
+import { template } from "../../../../../redux/actions";
 import { IoChevronForward, IoHeartOutline } from "react-icons/io5";
+import "./index.scss";
 
 export const V1 = ({ template, getTemplateApi, loading }) => {
   const navigation = useNavigate();
   const routeParams = useParams();
+  const [activeImage, setActiveImage] = useState(0);
 
   useEffect(() => {
     if (template?._id !== window.location.pathname.split("/")[2]) {
@@ -58,11 +60,12 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
       }
     });
   }
+  const dir = "sfpiv1-";
 
   return (
-    <div className="relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-white text-black pt-4">
+    <div className="sfpiv1-wrapper">
       <Navbar
-        classNames="text-textColor px-4"
+        classNames="sfpiv1-navbar"
         leading={
           <Button
             icon={<IoChevronForward size={"1.75rem"} />}
@@ -83,36 +86,46 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
           <Loading />
         </div>
       ) : (
-        <div className="flex flex-1 flex-col overflow-y-scroll no-scrollbar pb-40">
-          <div className="w-full flex flex-center-center relative bg-white h-[80vw] mb-8">
+        <div className="sfpiv1-scrollYBox no-scrollbar">
+          <div className="sfpiv1-imageContainer">
             <Image
-              src={baseUrl + "/files/" + part?.fileIds[0]?._id}
-              classNames="snap-align-start shrink-0 transition-all object-contain w-[100vw] h-[80vw] flex-contain bg-black bg-opacity-5"
+              src={baseUrl + "/files/" + part?.fileIds[activeImage]?._id}
+              classNames="sfpiv1-image snap-align-start"
               events={{ onClick: () => navigation("album") }}
             />
           </div>
-          <div className="flex flex-col px-4 gap-4 pb-8 text-indigo-200">
+          <div className="sfpiv1-imageList">
+            {part?.fileIds?.map((file, index) => (
+              <Image
+                src={baseUrl + "/files/" + file?._id}
+                classNames={`sfpiv1-smallImage ${
+                  activeImage === index ? "sfpiv1-smallImage-active" : ""
+                }`}
+                key={"products-image-" + index}
+                events={{ onClick: () => setActiveImage(index) }}
+              />
+            ))}
+          </div>
+          <div className="sfpiv1-info">
             <strong className="text-lg font-bold text-gray-700">
               {part?.title}
             </strong>
             {part?.text ? (
               <>
-                <b className="font-bold text-sm mt-4 text-[#028779] underline underline-offset-8">
-                  توضیحات محصول
-                </b>
-                <p className="text-xs font-medium leading-9">{part?.text}</p>
+                <b className="sfpiv1-info-tag">توضیحات محصول</b>
+                <p className="sfpiv1-info-text">{part?.text}</p>
               </>
             ) : null}
           </div>
           {finalSpecs?.length
             ? finalSpecs?.map((spec) => (
-                <div className="flex flex-col w-full">
-                  <b className="font-bold text-sm mt-4 px-4 text-[#028779] underline underline-offset-8">
+                <div className="flex flex-col w-full px-4">
+                  <b className="sfpiv1-info-tag">
                     {spec?.tag}
                   </b>
-                  <ul className="flex flex-col divide-y divide-gray-400 divide-opacity-10 py-4">
+                  <ul className="sfpiv1-info-specs">
                     {spec?.keys?.map((prop, index) => (
-                      <li className="grid grid-cols-2 gap-4 px-4">
+                      <li className="grid grid-cols-2 gap-4 px-2">
                         <b className="font-bold text-xs py-6 text-gray-700">
                           {prop}
                         </b>

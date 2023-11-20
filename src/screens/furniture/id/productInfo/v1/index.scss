@@ -1,0 +1,43 @@
+@tailwind components;
+
+@layer components {
+  .sfpiv1-wrapper {
+    @apply relative flex flex-1 flex-col max-w-full max-h-full h-full overflow-hidden bg-white text-black pt-4;
+  }
+  .sfpiv1-navbar {
+    @apply text-textColor px-4;
+  }
+  .sfpiv1-scrollYBox {
+    @apply flex flex-1 flex-col overflow-y-scroll pb-40;
+  }
+  .sfpiv1-imageContainer {
+    @apply w-full flex justify-center items-center relative bg-white h-[80vw] mb-4;
+  }
+  .sfpiv1-image {
+    @apply shrink-0 transition-all object-contain w-[100vw] h-[80vw] bg-black bg-opacity-5;
+  }
+  .sfpiv1-imageList{
+    @apply flex gap-4 items-center px-4 mb-8 flex-wrap;
+  }
+  .sfpiv1-smallImage {
+    @apply shrink-0 transition-all object-contain w-[15vw] h-[15vw] bg-black bg-opacity-5 rounded-md;
+  }
+  .sfpiv1-smallImage-active {
+    @apply border border-solid border-yellow-400;
+  }
+  .sfpiv1-info{
+    @apply flex flex-col px-4 gap-4 pb-8 text-indigo-200;
+  }
+  .sfpiv1-info-title{
+    @apply text-lg font-bold text-gray-700;
+  }
+  .sfpiv1-info-tag{
+    @apply font-bold text-sm mt-4 text-[#028779] underline underline-offset-8;
+  }
+  .sfpiv1-info-text{
+    @apply text-xs font-medium leading-9 text-black;
+  }
+  .sfpiv1-info-specs{
+    @apply flex flex-col divide-y divide-gray-400 divide-opacity-10 py-4;
+  }
+}

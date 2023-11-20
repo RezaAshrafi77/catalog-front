@@ -38,6 +38,7 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
       },
+      registerType: 'autoUpdate'
     }),
     splitVendorChunkPlugin(),
     reactRefresh(),

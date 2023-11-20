@@ -8,7 +8,6 @@ import { Carousel, Loading } from "~/components";
 import { separate } from "~/utils/funcs";
 import { template } from "../../../../../redux/actions";
 import { IoChevronForward, IoHeartOutline } from "react-icons/io5";
-import "./index.scss";
 
 export const V1 = ({ template, getTemplateApi, loading }) => {
   const navigation = useNavigate();

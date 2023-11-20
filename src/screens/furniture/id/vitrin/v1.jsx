@@ -90,8 +90,9 @@ export const V1 = ({ template, getTemplateApi, loading }) => {
                 part?.categoryIds[0]?._id ===
                 template?.allPartCategories[catActiveIndex]?._id
             )
-            ?.map((part) => (
+            ?.map((part, index) => (
               <Product
+                key={index}
                 style="sofa"
                 data={part}
                 events={{

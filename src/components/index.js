@@ -15,6 +15,7 @@ export { default as Product } from "./product";
 export { default as Food } from "./food";
 export { default as Loading } from "./Loading";
 export { default as Carousel } from "./Carousel";
+export { default as Layout } from "./Layout";
 
 // List
 export { default as ListView } from "./ListView";

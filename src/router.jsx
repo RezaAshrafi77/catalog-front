@@ -12,7 +12,7 @@ import {
   DimentionGuide,
   CafeIntro,
   FurnitureIntro,
-  ProjectsIntro,
+  Main,
   CafeHome,
   CafeMenu,
   CafeAbout,
@@ -73,10 +73,9 @@ export const Router = ({ template }) => {
         {/* {menuFullLayer ? <MenuFullLayer /> : null} */}
         <BrowserRouter>
           <Routes>
-            {device === "mobile" ? (
+            {true ? (
               <>
-                <Route path="" element={<ProjectsIntro />} />
-                <Route path="projects" element={<ProjectsIntro />} />
+                <Route path="" element={<Main />} />
                 <Route path="cafe" element={<CafeIntro />} />
                 <Route
                   path="cafe/:id"

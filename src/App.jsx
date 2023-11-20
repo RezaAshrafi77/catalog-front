@@ -3,7 +3,8 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import store from "./redux/store";
-import "./App.scss";
+import "./app.scss";
+import "./join.scss";
 
 //components
 import Router from "./router";

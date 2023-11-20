@@ -1,0 +1,8 @@
+@tailwind components;
+
+@layer components {
+  .fnt-wrapper {
+    @apply flex flex-1 flex-col items-center max-w-full pt-[15vh] pb-[10vh] max-h-full h-full overflow-x-hidden overflow-y-scroll bg-white text-gray-800;
+  }
+  
+}

@@ -3,7 +3,7 @@ import { homeData } from "./data";
 
 export default function FurnitureIntro({}) {
   return (
-    <div className="flex flex-1 flex-col items-center max-w-full pt-[15vh] pb-[10vh] max-h-full h-full overflow-x-hidden overflow-y-scroll bg-white text-gray-800">
+    <div className="fnt-wrapper">
       {homeData?.title ? (
         <div className="w-full flex flex-col items-center px-6 gap-4 text-2xl">
           <h1 className="font-bold">Place of the Title</h1>
